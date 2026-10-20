@@ -13,7 +13,7 @@
 /* Layout: app shell. Toolbar on top, map on the left, a reading panel on the right (stacks under the map on phones). */
 :root{
   --bg:#f3f5f4; --surface:#ffffff; --surface-2:#eaefee; --line:#d3dbda; --ink:#14262d; --ink-2:#465a61; --ink-3:#6f8288;
-  --brand:#1e5a73; --brand-soft:#d7e6ec; --edge:#8fa2a8; --edge-hi:#1e5a73; --edge-in:#b5651d;
+  --brand:#1e5a73; --brand-soft:#d7e6ec; --edge:#8fa2a8; --edge-hi:#1e5a73; --edge-in:#b5651d; --edge-both:#1f8f4e;
   --bad:#c42f2f; --bad-soft:#fbe4e2; --warn:#9a6400; --warn-soft:#fbefd5; --ok:#1d7a4c;
   --c-cond:#2a78d6; --c-sym:#eb6834; --c-blog:#1baf7a; --c-svc:#6250d6; --c-area:#e87ba4; --c-core:#008300; --c-broken:#c42f2f;
   --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
@@ -22,13 +22,13 @@
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
   --bg:#0f1719; --surface:#162226; --surface-2:#1d2c31; --line:#2b3d43; --ink:#e7eff0; --ink-2:#a9bbbf; --ink-3:#7f9499;
-  --brand:#6fb3cf; --brand-soft:#1d3a46; --edge:#4d6268; --edge-hi:#7cc3df; --edge-in:#e0954f;
+  --brand:#6fb3cf; --brand-soft:#1d3a46; --edge:#4d6268; --edge-hi:#7cc3df; --edge-in:#e0954f; --edge-both:#5fd08f;
   --bad:#ef6b6b; --bad-soft:#3a1d1e; --warn:#e2a83a; --warn-soft:#352a14; --ok:#5cc28f;
   --c-cond:#3987e5; --c-sym:#d95926; --c-blog:#199e70; --c-svc:#9085e9; --c-area:#d55181; --c-core:#2f9b2f; --c-broken:#ef6b6b;
   color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#0f1719; --surface:#162226; --surface-2:#1d2c31; --line:#2b3d43; --ink:#e7eff0; --ink-2:#a9bbbf; --ink-3:#7f9499;
-  --brand:#6fb3cf; --brand-soft:#1d3a46; --edge:#4d6268; --edge-hi:#7cc3df; --edge-in:#e0954f;
+  --brand:#6fb3cf; --brand-soft:#1d3a46; --edge:#4d6268; --edge-hi:#7cc3df; --edge-in:#e0954f; --edge-both:#5fd08f;
   --bad:#ef6b6b; --bad-soft:#3a1d1e; --warn:#e2a83a; --warn-soft:#352a14; --ok:#5cc28f;
   --c-cond:#3987e5; --c-sym:#d95926; --c-blog:#199e70; --c-svc:#9085e9; --c-area:#d55181; --c-core:#2f9b2f; --c-broken:#ef6b6b;
   color-scheme:dark}
@@ -76,6 +76,11 @@ button,input{font:inherit;color:inherit}
 .dim .edge{stroke-opacity:.04}
 .dim .edge.out{stroke:var(--edge-hi);stroke-opacity:.85;stroke-width:1.4}
 .dim .edge.in{stroke:var(--edge-in);stroke-opacity:.85;stroke-width:1.4}
+.dim .edge.both{stroke:var(--edge-both);stroke-opacity:.95;stroke-width:1.8;stroke-dasharray:none}
+.keylegend{position:absolute;left:12px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink-2);background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid var(--line);padding:5px 10px;border-radius:8px;pointer-events:none}
+.keylegend span{display:inline-flex;align-items:center;gap:6px}
+.keylegend i{display:inline-block;width:18px;height:0;border-top:2.5px solid}
+.both-tag{color:var(--edge-both);font-weight:600}
 .node path{stroke:var(--surface);stroke-width:1.5;cursor:pointer}
 .node.sel path{stroke:var(--ink);stroke-width:2.5}
 .node.hub-ring circle{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:2 2}
@@ -176,6 +181,7 @@ tr.clickable{cursor:pointer}
   <div class="view" id="map">
     <svg id="svg" role="img" aria-label="Network map of internal links between pages"></svg>
     <div class="tip" id="tip" hidden></div>
+    <div class="keylegend" id="keylegend" hidden><span><i style="border-color:var(--edge-hi)"></i>Links out</span><span><i style="border-color:var(--edge-in)"></i>Links in</span><span><i style="border-color:var(--edge-both)"></i>Both ways</span></div>
     <div class="mapnote" id="mapnote">Click a page to see its links. Drag to move, scroll or pinch to zoom.</div>
     <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zfit" aria-label="Fit map" style="font-size:12px">Fit</button></div>
   </div>
@@ -340,15 +346,23 @@ function applyFilters(){
   nodeSel.attr('display',n=>nodeOn(n)?null:'none');
   edgeSel.attr('display',e=>kindOn(e)&&nodeOn(e.S)&&nodeOn(e.T)?null:'none');
   highlight(); updateLabels();
+  if(state.sel && byId.has(state.sel)) renderNode(byId.get(state.sel));
   if(state.view==='table') renderTable();
+}
+function mutualSet(n){
+  const vis=e=>kindOn(e)&&nodeOn(e.S)&&nodeOn(e.T);
+  const outs=new Set(n.outs.filter(vis).map(e=>e.t));
+  return new Set(n.ins.filter(vis).map(e=>e.s).filter(s=>outs.has(s)));
 }
 function highlight(){
   const sel = state.sel ? byId.get(state.sel) : null;
   root.classed('dim',!!sel);
-  if(!sel){ nodeSel.classed('hl',false).classed('sel',false); edgeSel.classed('out',false).classed('in',false); return; }
+  if(!sel){ nodeSel.classed('hl',false).classed('sel',false); edgeSel.classed('out',false).classed('in',false).classed('both',false); return; }
   const nb = neighbours(sel);
+  const mu = mutualSet(sel);
   nodeSel.classed('hl',n=>nb.has(n.id)).classed('sel',n=>n.id===sel.id);
-  edgeSel.classed('out',e=>e.s===sel.id).classed('in',e=>e.t===sel.id);
+  edgeSel.classed('out',e=>e.s===sel.id).classed('in',e=>e.t===sel.id)
+    .classed('both',e=>(e.s===sel.id&&mu.has(e.t))||(e.t===sel.id&&mu.has(e.s)));
   edgeSel.filter(e=>e.s===sel.id||e.t===sel.id).raise();
 }
 
@@ -359,11 +373,13 @@ function dot(g){return `<svg class="dot" width="12" height="12" viewBox="-6 -6 1
 function linkRow(e, dir){
   const other = dir==='out' ? e.T : e.S;
   const bits=[KIND[e.c]];
+  const both = curMutual.has(other.id);
   if(e.r) bits.push(`via redirect from ${e.r}`);
   if(isBroken(e.T)) bits.push('page not found');
   const a = e.a.filter(Boolean).slice(0,2).map(x=>`<q>${esc(x)}</q>`).join(', ');
-  return `<li>${dot(other.g)}<div><button class="lk" data-go="${esc(other.id)}">${esc(other.t)}</button><span class="meta">${a?a+' · ':''}${esc(bits.join(' · '))}</span></div></li>`;
+  return `<li>${dot(other.g)}<div><button class="lk" data-go="${esc(other.id)}">${esc(other.t)}</button><span class="meta">${both?'<span class="both-tag">Both ways</span> · ':''}${a?a+' · ':''}${esc(bits.join(' · '))}</span></div></li>`;
 }
+let curMutual = new Set();
 function linkList(title, arr, dir, emptyText){
   const id='l'+Math.random().toString(36).slice(2,7);
   const sorted=[...arr].sort((a,b)=>a.c===b.c? (dir==='out'?a.T.t:a.S.t).localeCompare(dir==='out'?b.T.t:b.S.t) : (a.c===1?-1:b.c===1?1:a.c-b.c));
@@ -399,6 +415,7 @@ function renderNode(n){
   const ip=idxPage(n); if(ip) flags.push(`<span class="pill">Blog index page ${ip}</span>`);
   if(n.post) flags.push('<span class="pill">Blog post</span>');
   const hidden = (n.ins.length-ins.length)+(n.outs.length-outs.length);
+  curMutual = mutualSet(n);
   pane.innerHTML = `
   <div><p class="eyebrow">${dot(n.g)} ${GROUPS[n.g].name}</p><h2>${esc(n.t)}</h2>
   <div class="path" style="margin-top:4px">${isBroken(n)?esc(n.id):`<a href="${esc(url)}" target="_blank" rel="noopener">${esc(n.id)}</a>`}</div></div>
@@ -407,6 +424,7 @@ function renderNode(n){
     <div class="stat"><div class="v">${n.inT}</div><div class="k">links in, from template blocks</div></div>
     <div class="stat"><div class="v">${n.outC}</div><div class="k">links out, written in</div></div>
   </div>
+  ${curMutual.size?`<p class="empty" style="margin:0"><span class="both-tag">${curMutual.size} ${curMutual.size===1?'page links':'pages link'} both ways</span> with this one, shown in green on the map.</p>`:''}
   ${flags.length?`<div class="pills">${flags.join('')}</div>`:''}
   ${hidden?`<p class="empty">${hidden} more links are hidden by the link filters above.</p>`:''}
   ${linkList('Pages linking here', ins, 'in', isBroken(n)?'':'No other page links here with the current filters.')}
@@ -428,6 +446,7 @@ function select(id, center){
     svg.transition().duration(450).call(zoom.transform, d3.zoomIdentity.translate(W/2,H/2).scale(sc).translate(-n.x,-n.y));
   }
   document.getElementById('mapnote').hidden = !!state.sel;
+  document.getElementById('keylegend').hidden = !(state.sel && state.view==='map');
   document.getElementById('panel').scrollTop=0;
 }
 function syncChips(){ const btns=chipWrap.querySelectorAll('.chip'); let i=0; ORDER.forEach(g=>{ if(!G.nodes.some(n=>n.g===g)) return; btns[i++].setAttribute('aria-pressed',state.groups.has(g)); }); }
