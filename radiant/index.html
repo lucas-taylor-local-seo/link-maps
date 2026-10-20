@@ -1,0 +1,772 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,-apple-system,"Segoe UI",sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Radiant Chiro Link Map</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: app shell. Toolbar on top, map on the left, a reading panel on the right (stacks under the map on phones). */
+:root{
+  --bg:#f3f5f4; --surface:#ffffff; --surface-2:#eaefee; --line:#d3dbda; --ink:#14262d; --ink-2:#465a61; --ink-3:#6f8288;
+  --brand:#1e5a73; --brand-soft:#d7e6ec; --edge:#8fa2a8; --edge-hi:#1e5a73; --edge-in:#b5651d; --edge-both:#1f8f4e;
+  --bad:#c42f2f; --bad-soft:#fbe4e2; --warn:#9a6400; --warn-soft:#fbefd5; --ok:#1d7a4c;
+  --c-cond:#2a78d6; --c-sym:#eb6834; --c-blog:#1baf7a; --c-svc:#6250d6; --c-area:#e87ba4; --c-core:#008300; --c-broken:#c42f2f; --c-video:#e34948; --c-review:#eda100; --t-back:#2a78d6; --t-sciatica:#eb6834; --t-neck:#1baf7a; --t-migraine:#eda100; --t-prenatal:#e87ba4; --t-pediatric:#008300; --t-nervous:#6250d6; --t-sports:#e34948; --t-local:#5f7a82; --t-core:#9aa8ac; --t-x:#b9c3c6; --k0:#2a78d6; --k1:#eb6834; --k2:#1baf7a; --k3:#eda100; --k4:#e87ba4; --k5:#008300; --k6:#6250d6; --k7:#e34948;
+  --f-display:"IBM Plex Sans Condensed","Arial Narrow",system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1719; --surface:#162226; --surface-2:#1d2c31; --line:#2b3d43; --ink:#e7eff0; --ink-2:#a9bbbf; --ink-3:#7f9499;
+  --brand:#6fb3cf; --brand-soft:#1d3a46; --edge:#4d6268; --edge-hi:#7cc3df; --edge-in:#e0954f; --edge-both:#5fd08f;
+  --bad:#ef6b6b; --bad-soft:#3a1d1e; --warn:#e2a83a; --warn-soft:#352a14; --ok:#5cc28f;
+  --c-cond:#3987e5; --c-sym:#d95926; --c-blog:#199e70; --c-svc:#9085e9; --c-area:#d55181; --c-core:#2f9b2f; --c-broken:#ef6b6b; --c-video:#e66767; --c-review:#c98500; --t-back:#3987e5; --t-sciatica:#d95926; --t-neck:#199e70; --t-migraine:#c98500; --t-prenatal:#d55181; --t-pediatric:#2f9b2f; --t-nervous:#9085e9; --t-sports:#e66767; --t-local:#7f9aa2; --t-core:#56676c; --t-x:#3f4f54; --k0:#3987e5; --k1:#d95926; --k2:#199e70; --k3:#c98500; --k4:#d55181; --k5:#2f9b2f; --k6:#9085e9; --k7:#e66767;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1719; --surface:#162226; --surface-2:#1d2c31; --line:#2b3d43; --ink:#e7eff0; --ink-2:#a9bbbf; --ink-3:#7f9499;
+  --brand:#6fb3cf; --brand-soft:#1d3a46; --edge:#4d6268; --edge-hi:#7cc3df; --edge-in:#e0954f; --edge-both:#5fd08f;
+  --bad:#ef6b6b; --bad-soft:#3a1d1e; --warn:#e2a83a; --warn-soft:#352a14; --ok:#5cc28f;
+  --c-cond:#3987e5; --c-sym:#d95926; --c-blog:#199e70; --c-svc:#9085e9; --c-area:#d55181; --c-core:#2f9b2f; --c-broken:#ef6b6b; --c-video:#e66767; --c-review:#c98500; --t-back:#3987e5; --t-sciatica:#d95926; --t-neck:#199e70; --t-migraine:#c98500; --t-prenatal:#d55181; --t-pediatric:#2f9b2f; --t-nervous:#9085e9; --t-sports:#e66767; --t-local:#7f9aa2; --t-core:#56676c; --t-x:#3f4f54; --k0:#3987e5; --k1:#d95926; --k2:#199e70; --k3:#c98500; --k4:#d55181; --k5:#2f9b2f; --k6:#9085e9; --k7:#e66767;
+  color-scheme:dark}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font:14px/1.5 var(--f-body);display:flex;flex-direction:column;min-height:0}
+button,input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding-block:12px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:var(--surface);border-bottom:1px solid var(--line)}
+.brand h1{margin:0;font:600 19px/1.1 var(--f-display);letter-spacing:.01em;text-wrap:balance}
+.brand p{margin:2px 0 0;color:var(--ink-3);font-size:12px}
+.tabs{display:flex;gap:2px;background:var(--surface-2);border-radius:8px;padding:3px}
+.tabs button{border:0;background:none;padding:5px 12px;border-radius:6px;cursor:pointer;color:var(--ink-2);font-weight:500}
+.tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.search{flex:1 1 220px;max-width:340px;position:relative}
+.search input{width:100%;box-sizing:border-box;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg)}
+.sugg{position:absolute;z-index:20;left:0;right:0;top:100%;margin:4px 0 0;padding:4px;list-style:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.18);max-height:300px;overflow:auto}
+.sugg li{padding:6px 8px;border-radius:6px;cursor:pointer}
+.sugg li[aria-selected="true"],.sugg li:hover{background:var(--surface-2)}
+.sugg small{display:block;color:var(--ink-3);font:12px var(--f-mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.filters{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--line);background:var(--surface);font-size:13px}
+.filters .lbl{color:var(--ink-3);font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+.chip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:3px 10px 3px 7px;cursor:pointer;color:var(--ink-2)}
+.chip[aria-pressed="false"]{opacity:.45;text-decoration:line-through}
+.chip svg{flex:none}
+.chip b{font-weight:500;color:var(--ink)}
+.chip .n{color:var(--ink-3);font-variant-numeric:tabular-nums}
+.toggle{display:inline-flex;align-items:center;gap:6px;cursor:pointer;color:var(--ink-2)}
+.toggle input{accent-color:var(--brand);margin:0}
+.swatch-line{width:22px;height:0;border-top:2px solid var(--edge)}
+.swatch-line.tpl{border-top-style:dotted}
+.swatch-line.idx{border-top-style:dashed;opacity:.7}
+.main{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 380px;min-height:0}
+.view{min-height:0;position:relative}
+#map{position:relative;overflow:hidden;background:var(--bg)}
+#svg{display:block;width:100%;height:100%;cursor:grab;touch-action:none}
+#svg:active{cursor:grabbing}
+.mapnote{position:absolute;left:12px;bottom:10px;font-size:12px;color:var(--ink-3);background:color-mix(in srgb,var(--bg) 80%,transparent);padding:2px 6px;border-radius:4px;pointer-events:none}
+.zoom{position:absolute;right:12px;bottom:12px;display:flex;flex-direction:column;gap:4px}
+.zoom button{width:32px;height:32px;border:1px solid var(--line);background:var(--surface);border-radius:8px;cursor:pointer;font-size:16px;line-height:1}
+.edge{fill:none;stroke:var(--edge);stroke-width:.8;stroke-opacity:.28}
+.edge.tpl{stroke-dasharray:1.5 2.5}
+.edge.idx{stroke-dasharray:5 3}
+.edge.red{stroke:var(--warn);stroke-opacity:.45}
+.edge.dead{stroke:var(--bad);stroke-opacity:.9;stroke-width:1.4}
+.dim .edge{stroke-opacity:.04}
+.dim .edge.out{stroke:var(--edge-hi);stroke-opacity:.85;stroke-width:1.4}
+.dim .edge.in{stroke:var(--edge-in);stroke-opacity:.85;stroke-width:1.4}
+.dim .edge.both{stroke:var(--edge-both);stroke-opacity:.95;stroke-width:1.8;stroke-dasharray:none}
+.keylegend{position:absolute;left:12px;bottom:10px;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink-2);background:color-mix(in srgb,var(--surface) 92%,transparent);border:1px solid var(--line);padding:5px 10px;border-radius:8px;pointer-events:none}
+.keylegend span{display:inline-flex;align-items:center;gap:6px}
+.keylegend i{display:inline-block;width:18px;height:0;border-top:2.5px solid}
+.both-tag{color:var(--edge-both);font-weight:600}
+.node path{stroke:var(--surface);stroke-width:1.5;cursor:pointer}
+.node.sel path{stroke:var(--ink);stroke-width:2.5}
+.node.hub-ring circle{fill:none;stroke:var(--ink-3);stroke-width:1;stroke-dasharray:2 2}
+.dim .node{opacity:.15}
+.dim .node.hl{opacity:1}
+.label{font:500 11px var(--f-body);fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:3px;stroke-linejoin:round;pointer-events:none}
+.label.small{font-size:10px;fill:var(--ink-2)}
+.tip{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:6px 9px;font-size:12px;box-shadow:0 6px 20px rgba(0,0,0,.18);max-width:280px;z-index:5}
+.tip b{display:block;font-weight:600}
+.tip span{color:var(--ink-3);font:11px var(--f-mono);word-break:break-all}
+aside{border-left:1px solid var(--line);background:var(--surface);overflow:auto;min-height:0}
+.pane{padding:16px 18px 28px;display:flex;flex-direction:column;gap:18px}
+.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-3);margin:0}
+h2{margin:0;font:600 20px/1.2 var(--f-display);text-wrap:balance}
+h3{margin:0 0 6px;font:600 13px var(--f-body);display:flex;justify-content:space-between;gap:8px}
+h3 .n{color:var(--ink-3);font-weight:500;font-variant-numeric:tabular-nums}
+.path{font:12px var(--f-mono);color:var(--ink-2);word-break:break-all}
+.path a{color:var(--brand)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stat{background:var(--surface-2);border-radius:8px;padding:8px 10px}
+.stat .v{font:600 20px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat .k{font-size:11px;color:var(--ink-3);margin-top:3px;line-height:1.25}
+.pills{display:flex;flex-wrap:wrap;gap:6px}
+.pill{font-size:12px;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);display:inline-flex;gap:5px;align-items:center}
+.pill.bad{background:var(--bad-soft);color:var(--bad)}
+.pill.warn{background:var(--warn-soft);color:var(--warn)}
+.pill.ok{color:var(--ok)}
+.list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.list li{padding:6px 0;border-top:1px solid var(--line);display:grid;grid-template-columns:12px minmax(0,1fr);gap:8px;align-items:start}
+.list li:first-child{border-top:0}
+.list button.lk{all:unset;cursor:pointer;color:var(--ink);font-weight:500;overflow-wrap:anywhere}
+.list button.lk:hover{color:var(--brand);text-decoration:underline}
+.list button.lk:focus-visible{outline:2px solid var(--brand)}
+.list .meta{display:block;font-size:12px;color:var(--ink-3);overflow-wrap:anywhere}
+.list .meta q{color:var(--ink-2)}
+.more{all:unset;cursor:pointer;color:var(--brand);font-size:13px;margin-top:4px}
+.empty{color:var(--ink-3);font-size:13px;margin:0}
+.issue{border:1px solid var(--line);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;background:var(--surface)}
+.issue.sev-bad{border-left:4px solid var(--bad)}
+.issue.sev-warn{border-left:4px solid var(--warn)}
+.issue.sev-info{border-left:4px solid var(--brand)}
+.issue.sev-ok{border-left:4px solid var(--ok)}
+.issue p{margin:0;color:var(--ink-2);max-width:65ch}
+.issue h3{font-size:14px;margin:0}
+details summary{cursor:pointer;color:var(--brand);font-size:13px}
+#issuesView,#tableView{overflow:auto;background:var(--bg)}
+.issues-wrap{max-width:900px;padding-block:18px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:12px}
+.issues-wrap>p{margin:0;color:var(--ink-2);max-width:70ch}
+.tbl-wrap{padding-block:12px 40px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:13px}
+th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{position:sticky;top:0;background:var(--surface-2);font-weight:600;font-size:12px;white-space:nowrap}
+th button{all:unset;cursor:pointer}
+th button:focus-visible{outline:2px solid var(--brand)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td .path{font-size:11px}
+tr:hover td{background:var(--surface-2)}
+tr.clickable{cursor:pointer}
+.dot{display:inline-block;vertical-align:middle}
+@media (max-width:860px){
+  body{height:auto;min-height:100%}
+  .main{grid-template-columns:1fr}
+  #map{height:62vh;min-height:360px}
+  aside{border-left:0;border-top:1px solid var(--line)}
+  #issuesView,#tableView{min-height:60vh}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+.seg{display:inline-flex;gap:2px;background:var(--surface-2);border-radius:8px;padding:2px}
+.seg button{border:0;background:none;padding:3px 10px;border-radius:6px;cursor:pointer;color:var(--ink-2);font-weight:500;font-size:13px}
+.seg button[aria-checked="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.tdot{display:inline-block;width:10px;height:10px;border-radius:50%;flex:none;vertical-align:middle}
+.node.util{opacity:.38}
+.node.util.hl,.node.util.sel{opacity:1}
+.node.pillar .ring{fill:none;stroke:var(--ink);stroke-width:2}
+.clabel{font:600 13px var(--f-display);letter-spacing:.02em;text-transform:uppercase;fill:var(--ink-2);paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.dim .clabel{opacity:.25}
+.shapekey{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center}
+.shapekey span{display:inline-flex;align-items:center;gap:4px}
+.ctable{width:100%;border-collapse:collapse;font-size:13px;min-width:0}
+.ctable th,.ctable td{padding:6px 4px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.ctable th{background:none;position:static;font-size:11px;color:var(--ink-3);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.ctable td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.ctable .lk{font-weight:500}
+.ctable .lk{all:unset;cursor:pointer;color:var(--ink);font-weight:500}
+.ctable .lk:hover{color:var(--brand);text-decoration:underline}
+.ctable .lk:focus-visible{outline:2px solid var(--brand)}
+.subh{margin:10px 0 0;font-weight:600;display:flex;align-items:center;gap:6px}
+.subh span{color:var(--ink-3);font-weight:400;font-size:13px}
+.label.pil{font-size:14px;font-weight:600}
+.ratio.low{color:var(--warn)}
+.ratio.none{color:var(--ink-3)}
+</style>
+</head>
+<body>
+
+
+
+<header class="top">
+  <div class="brand">
+    <h1 id="brandName">Link Map</h1>
+    <p id="subline"></p>
+  </div>
+  <div class="tabs" role="tablist" aria-label="View">
+    <button role="tab" id="tab-map" aria-selected="true" data-view="map">Map</button>
+    <button role="tab" id="tab-issues" aria-selected="false" data-view="issues">Issues <span id="issueCount"></span></button>
+    <button role="tab" id="tab-table" aria-selected="false" data-view="table">All pages</button>
+  </div>
+  <div class="search">
+    <input id="q" type="search" placeholder="Find a page by name or URL" autocomplete="off" aria-label="Find a page" role="combobox" aria-expanded="false" aria-controls="sugg">
+    <ul class="sugg" id="sugg" role="listbox" hidden></ul>
+  </div>
+</header>
+<div class="filters" id="filters">
+  <span class="lbl">Group by</span>
+  <div class="seg" role="radiogroup" aria-label="Group pages by" id="modeSeg">
+    <button type="button" role="radio" data-mode="topic" aria-checked="true">Topic</button>
+    <button type="button" role="radio" data-mode="section" aria-checked="false">Section</button>
+    <button type="button" role="radio" data-mode="links" aria-checked="false">Actual links</button>
+  </div>
+  <span id="groupChips" style="display:contents"></span>
+  <span class="lbl" style="margin-left:6px">Links</span>
+  <label class="toggle"><input type="checkbox" id="t-content" checked><span class="swatch-line"></span>Written into the page</label>
+  <label class="toggle"><input type="checkbox" id="t-tpl"><span class="swatch-line tpl"></span>Template blocks</label>
+  <label class="toggle"><input type="checkbox" id="t-idx" checked><span class="swatch-line idx"></span>Blog index</label>
+  <label class="toggle"><input type="checkbox" id="t-util">Site-wide pages</label>
+</div>
+<div class="main">
+  <div class="view" id="map">
+    <svg id="svg" role="img" aria-label="Network map of internal links between pages, grouped into topic clusters"></svg>
+    <div class="tip" id="tip" hidden></div>
+    <div class="keylegend" id="keylegend" hidden><span><i style="border-color:var(--edge-hi)"></i>Links out</span><span><i style="border-color:var(--edge-in)"></i>Links in</span><span><i style="border-color:var(--edge-both)"></i>Both ways</span></div>
+    <div class="mapnote" id="mapnote"></div>
+    <div class="zoom"><button id="zin" aria-label="Zoom in">+</button><button id="zout" aria-label="Zoom out">&minus;</button><button id="zfit" aria-label="Fit map" style="font-size:12px">Fit</button></div>
+  </div>
+  <div class="view" id="issuesView" hidden><div class="issues-wrap" id="issues"></div></div>
+  <div class="view" id="tableView" hidden><div class="tbl-wrap"><div class="tbl-scroll"><table id="tbl"></table></div></div></div>
+  <aside id="panel" aria-live="polite"><div class="pane" id="pane"></div></aside>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.8.5/d3.min.js"></script>
+<script id="data" type="application/json">{"nodes":[{"id":"/privacy-policy/","t":"Privacy Policy","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/","t":"Home","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/contact/","t":"Contact","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/about/","t":"About","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/blog/","t":"Blog","g":"core","ni":0,"nav":1,"post":0,"arch":1,"tp":"core"},{"id":"/areas-we-serve/","t":"Areas We Serve","g":"area","ni":0,"nav":1,"post":0,"tp":"local"},{"id":"/services/","t":"Services","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/schedule/","t":"Schedule","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/services/family-chiropractor-colleyville/","t":"Family Chiropractor Colleyville","g":"svc","ni":0,"nav":1,"post":0,"tp":"family","pil":1},{"id":"/services/pediatric-chiropractor-colleyville/","t":"Pediatric Chiropractor Colleyville","g":"svc","ni":0,"nav":1,"post":0,"tp":"pediatric","pil":1},{"id":"/services/prenatal-chiropractor-colleyville/","t":"Prenatal Chiropractor Colleyville","g":"svc","ni":0,"nav":1,"post":0,"tp":"prenatal","pil":1},{"id":"/services/back-pain-sciatica-colleyville/","t":"Back Pain & Sciatica Chiropractor","g":"svc","ni":0,"nav":1,"post":0,"tp":"back","pil":1},{"id":"/services/sports-chiropractic-care-colleyville/","t":"Sports & Active Adult Chiropractic Care","g":"svc","ni":0,"nav":1,"post":0,"tp":"sports","pil":1},{"id":"/wellness-center-colleyville/","t":"Wellness Center","g":"svc","ni":0,"nav":0,"post":0,"tp":"nervous"},{"id":"/payment-options/","t":"Pricing & Payment Options","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/services/neck-pain-headache-colleyville/","t":"Neck Pain & Headache Chiropractor","g":"svc","ni":0,"nav":1,"post":0,"tp":"neck","pil":1},{"id":"/services/posture-desk-strain-colleyville/","t":"Posture & Desk-Related Strain Chiropractor","g":"svc","ni":0,"nav":1,"post":0,"tp":"posture","pil":1},{"id":"/services/posture-movement-assessment-colleyville/","t":"Posture & Movement Chiropractic Assessment","g":"svc","ni":0,"nav":1,"post":0,"tp":"posture"},{"id":"/services/nervous-system-assessment-colleyville/","t":"Nervous System Assessment","g":"svc","ni":0,"nav":1,"post":0,"tp":"nervous","pil":1},{"id":"/what-to-expect/","t":"What to Expect","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/terms-of-service/","t":"Terms of Service","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/areas-we-serve/colleyville-tx/","t":"Colleyville, TX Chiropractor","g":"area","ni":0,"nav":1,"post":0,"tp":"local"},{"id":"/conditions/","t":"Conditions We Support","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/what-is-cla-insight-scanning/","t":"What Is CLA INSiGHT Scanning? A Look Inside Your Nervous System","g":"blog","ni":0,"nav":0,"post":1,"tp":"nervous"},{"id":"/symptoms/","t":"Symptoms We Address","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/reviews/","t":"Reviews","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/faqs/","t":"Frequently Asked Questions","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/conditions/vagus-nerve-dysfunction/","t":"Vagus Nerve Dysfunction","g":"cond","ni":0,"nav":1,"post":0,"tp":"nervous"},{"id":"/family-chiropractor-north-richland-hills/","t":"Family Chiropractor North Richland Hills","g":"area","ni":0,"nav":1,"post":0,"tp":"local"},{"id":"/symptoms/pregnancy-back-pain-colleyville/","t":"Pregnancy Back Pain","g":"sym","ni":0,"nav":1,"post":0,"tp":"prenatal"},{"id":"/symptoms/poor-sleep-colleyville/","t":"Poor Sleep","g":"sym","ni":0,"nav":1,"post":0,"tp":"nervous"},{"id":"/conditions/scoliosis-colleyville/","t":"Scoliosis","g":"cond","ni":0,"nav":1,"post":0,"tp":"back"},{"id":"/symptoms/colic-colleyville/","t":"Infant Colic Support","g":"sym","ni":0,"nav":1,"post":0,"tp":"pediatric"},{"id":"/symptoms/digestive-discomfort-colleyville/","t":"Digestive Discomfort","g":"sym","ni":0,"nav":1,"post":0,"tp":"nervous"},{"id":"/conditions/ear-infections-colleyville/","t":"Ear Infections in Colleyville: Signs to Watch For and When Chiropractic Care Can Help","g":"cond","ni":0,"nav":1,"post":0,"tp":"pediatric"},{"id":"/conditions/pinched-nerve-colleyville/","t":"Pinched Nerve Symptoms and Relief: A Guide for Colleyville Residents","g":"cond","ni":0,"nav":1,"post":0,"tp":"back"},{"id":"/chiropractic-care-during-pregnancy/","t":"Is Chiropractic Care Safe During Pregnancy? What Colleyville Moms Should Know","g":"blog","ni":0,"nav":0,"post":1,"tp":"prenatal"},{"id":"/what-is-the-webster-technique/","t":"What Is the Webster Technique? A Plain-English Guide for Expecting Parents","g":"blog","ni":0,"nav":0,"post":1,"tp":"prenatal"},{"id":"/sleeping-with-back-pain-during-pregnancy/","t":"How to Sleep With Back Pain During Pregnancy","g":"blog","ni":0,"nav":0,"post":1,"tp":"prenatal"},{"id":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"Pelvic Pain, Sciatica or Round Ligament Pain? How to Tell the Difference in Pregnancy","g":"blog","ni":0,"nav":0,"post":1,"tp":"prenatal"},{"id":"/chiropractor-for-kids/","t":"Chiropractor for Kids in Colleyville: 7 Questions Parents Ask Before the First Visit","g":"blog","ni":0,"nav":0,"post":1,"tp":"pediatric"},{"id":"/videos/","t":"Videos","g":"core","ni":0,"nav":1,"post":0,"tp":"core"},{"id":"/reviews/brian-neck-pain-story/","t":"Brian’s Neck Pain Story","g":"review","ni":0,"nav":0,"post":0,"tp":"neck"},{"id":"/reviews/jb-ongoing-care-story/","t":"JB’s Ongoing Care Story","g":"review","ni":0,"nav":0,"post":0,"tp":"family"},{"id":"/reviews/marisa-back-neck-pain-story/","t":"Marisa’s Back and Neck Pain Story","g":"review","ni":0,"nav":0,"post":0,"tp":"back"},{"id":"/videos/low-back-pain-sciatica/","t":"Low Back Pain and Sciatica Video","g":"video","ni":0,"nav":0,"post":0,"tp":"back"},{"id":"/videos/active-lifestyle-chiropractic/","t":"Chiropractic for Active Adults Video","g":"video","ni":0,"nav":0,"post":0,"tp":"sports"},{"id":"/videos/posture-movement-assessment/","t":"Posture and Movement Assessment Video","g":"video","ni":0,"nav":0,"post":0,"tp":"posture"},{"id":"/videos/desk-posture-strain/","t":"Sitting and Desk Strain Video","g":"video","ni":0,"nav":0,"post":0,"tp":"posture"},{"id":"/videos/cla-insight-scans/","t":"CLA Insight Scans Video","g":"video","ni":0,"nav":0,"post":0,"tp":"nervous"},{"id":"/videos/neck-pain-headaches/","t":"Neck Pain and Headaches Video","g":"video","ni":0,"nav":0,"post":0,"tp":"neck"},{"id":"/videos/prenatal-chiropractic/","t":"Prenatal Chiropractic Video","g":"video","ni":0,"nav":0,"post":0,"tp":"prenatal"},{"id":"/videos/pediatric-chiropractic/","t":"Chiropractic for Babies and Kids Video","g":"video","ni":0,"nav":0,"post":0,"tp":"pediatric"},{"id":"/videos/family-chiropractic/","t":"Family Chiropractic Video","g":"video","ni":0,"nav":0,"post":0,"tp":"family"},{"id":"/videos/meet-dr-cameron/","t":"Meet Dr. Cameron Video","g":"video","ni":0,"nav":0,"post":0,"tp":"core"},{"id":"/videos/welcome/","t":"Welcome to Radiant Chiropractic Video","g":"video","ni":0,"nav":0,"post":0,"tp":"core"},{"id":"/stretch-library/","t":"Missing page (404)","g":"broken","ni":0,"nav":0,"post":0,"tp":"core"},{"id":"/category/pediatric-care/","t":"Category: pediatric care","g":"core","ni":0,"nav":0,"post":0,"tp":"core"},{"id":"/category/prenatal-care/","t":"Category: prenatal care","g":"core","ni":0,"nav":0,"post":0,"tp":"core"},{"id":"/category/patient-education/","t":"Category: patient education","g":"core","ni":0,"nav":0,"post":0,"tp":"core"}],"edges":[{"s":"/privacy-policy/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/","t":"/videos/welcome/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/","t":"/about/","c":1,"a":["We Listen First Every person is different. We"],"r":null,"q":""},{"s":"/","t":"/services/nervous-system-assessment-colleyville/","c":1,"a":["CLA INSiGHT Scanning We look beyond where it"],"r":null,"q":""},{"s":"/","t":"/services/posture-movement-assessment-colleyville/","c":1,"a":["Movement & Pattern Analysis We assess how you"],"r":null,"q":""},{"s":"/","t":"/what-to-expect/","c":1,"a":["Personalized Care Plans Your story and findin"],"r":null,"q":""},{"s":"/","t":"/stretch-library/","c":1,"a":[],"r":null,"q":""},{"s":"/","t":"/areas-we-serve/","c":1,"a":["See All Areas We Serve"],"r":null,"q":""},{"s":"/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["Pediatric Chiropractor Gentle, age-appropriat"],"r":null,"q":""},{"s":"/","t":"/services/family-chiropractor-colleyville/","c":1,"a":["Family Chiropractor Personalized adjustments"],"r":null,"q":""},{"s":"/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["Prenatal Chiropractor Webster Technique certi"],"r":null,"q":""},{"s":"/","t":"/services/neck-pain-headache-colleyville/","c":1,"a":["Neck Pain & Headache Relief Targeted care for"],"r":null,"q":""},{"s":"/","t":"/services/sports-chiropractic-care-colleyville/","c":1,"a":["Sports & Active Adult Chiropractic Care built"],"r":null,"q":""},{"s":"/","t":"/services/back-pain-sciatica-colleyville/","c":1,"a":["Back Pain & Sciatica Care Nervous-system-info"],"r":null,"q":""},{"s":"/","t":"/services/posture-desk-strain-colleyville/","c":1,"a":["Posture & Desk-Related Strain Relief for the"],"r":null,"q":""},{"s":"/contact/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/contact/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/about/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/about/","t":"/videos/meet-dr-cameron/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/about/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/blog/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/blog/","t":"/chiropractor-for-kids/","c":1,"a":["[img] A chiropractor sitting on the floor wit"],"r":null,"q":""},{"s":"/blog/","t":"/category/pediatric-care/","c":1,"a":["Kids & Pediatric Care"],"r":null,"q":""},{"s":"/blog/","t":"/pelvic-pain-vs-sciatica-in-pregnancy/","c":1,"a":["[img] A woman lying face down on a chiropract"],"r":null,"q":""},{"s":"/blog/","t":"/category/prenatal-care/","c":1,"a":["Pregnancy & Prenatal Care"],"r":null,"q":""},{"s":"/blog/","t":"/sleeping-with-back-pain-during-pregnancy/","c":1,"a":["[img] Woman lying face down on a chiropractic"],"r":null,"q":""},{"s":"/blog/","t":"/what-is-the-webster-technique/","c":1,"a":["[img] Chiropractor gently adjusting a woman's"],"r":null,"q":""},{"s":"/blog/","t":"/chiropractic-care-during-pregnancy/","c":1,"a":["[img] Dr. Cameron Williams adjusts a patient"],"r":null,"q":""},{"s":"/blog/","t":"/what-is-cla-insight-scanning/","c":1,"a":["[img] Dr. Cameron Williams in a treatment roo"],"r":null,"q":""},{"s":"/blog/","t":"/category/patient-education/","c":1,"a":["Patient Education"],"r":null,"q":""},{"s":"/blog/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/areas-we-serve/","t":"/schedule/","c":1,"a":["Schedule Now","Schedule Your Visit"],"r":"/get-started/","q":""},{"s":"/areas-we-serve/","t":"/areas-we-serve/colleyville-tx/","c":1,"a":["Colleyville, TX"],"r":null,"q":""},{"s":"/areas-we-serve/","t":"/family-chiropractor-north-richland-hills/","c":1,"a":["North Richland Hills, TX"],"r":null,"q":""},{"s":"/areas-we-serve/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/services/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/services/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["Pediatric Chiropractor Gentle, age-appropriat"],"r":null,"q":""},{"s":"/services/","t":"/services/family-chiropractor-colleyville/","c":1,"a":["Family Chiropractor Personalized adjustments"],"r":null,"q":""},{"s":"/services/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["Prenatal Chiropractor Webster Technique certi"],"r":null,"q":""},{"s":"/services/","t":"/services/neck-pain-headache-colleyville/","c":1,"a":["Neck Pain & Headache Relief Targeted care for"],"r":null,"q":""},{"s":"/services/","t":"/services/sports-chiropractic-care-colleyville/","c":1,"a":["Sports & Active Adult Chiropractic Care built"],"r":null,"q":""},{"s":"/services/","t":"/services/back-pain-sciatica-colleyville/","c":1,"a":["Back Pain & Sciatica Care Nervous-system-info"],"r":null,"q":""},{"s":"/services/","t":"/services/posture-desk-strain-colleyville/","c":1,"a":["Posture & Desk-Related Strain Relief for the"],"r":null,"q":""},{"s":"/services/","t":"/services/posture-movement-assessment-colleyville/","c":1,"a":["Posture & Movement Assessment A hands-on eval"],"r":null,"q":""},{"s":"/services/","t":"/services/nervous-system-assessment-colleyville/","c":1,"a":["Nervous System Assessment A CLA INSiGHT scan"],"r":null,"q":""},{"s":"/services/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/schedule/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/services/family-chiropractor-colleyville/","t":"/videos/family-chiropractic/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/family-chiropractor-colleyville/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal care"],"r":null,"q":""},{"s":"/services/family-chiropractor-colleyville/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["pediatric care"],"r":null,"q":""},{"s":"/services/family-chiropractor-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/services/family-chiropractor-colleyville/","t":"/schedule/","c":1,"a":["Book Your First Appointment"],"r":null,"q":""},{"s":"/services/pediatric-chiropractor-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/services/pediatric-chiropractor-colleyville/","t":"/videos/pediatric-chiropractic/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/pediatric-chiropractor-colleyville/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal care"],"r":null,"q":""},{"s":"/services/pediatric-chiropractor-colleyville/","t":"/services/family-chiropractor-colleyville/","c":1,"a":["family chiropractic care"],"r":null,"q":""},{"s":"/services/pediatric-chiropractor-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/services/prenatal-chiropractor-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/services/prenatal-chiropractor-colleyville/","t":"/videos/prenatal-chiropractic/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/prenatal-chiropractor-colleyville/","t":"/services/family-chiropractor-colleyville/","c":1,"a":["family chiropractic care"],"r":null,"q":""},{"s":"/services/prenatal-chiropractor-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/services/back-pain-sciatica-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/services/back-pain-sciatica-colleyville/","t":"/videos/low-back-pain-sciatica/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/back-pain-sciatica-colleyville/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal care"],"r":null,"q":""},{"s":"/services/back-pain-sciatica-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/services/sports-chiropractic-care-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/services/sports-chiropractic-care-colleyville/","t":"/videos/active-lifestyle-chiropractic/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/sports-chiropractic-care-colleyville/","t":"/services/back-pain-sciatica-colleyville/","c":1,"a":["back pain and sciatica care"],"r":null,"q":""},{"s":"/services/sports-chiropractic-care-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/services/nervous-system-assessment-colleyville/","c":1,"a":["Nervous System Assessment"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/services/posture-movement-assessment-colleyville/","c":1,"a":["Posture & Movement Assessment"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal chiropractic care"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["pediatric visits"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/services/family-chiropractor-colleyville/","c":1,"a":["family chiropractic care"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/services/sports-chiropractic-care-colleyville/","c":1,"a":["concerns and goals"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/payment-options/","c":1,"a":["Learn more about Pricing & Payment Options in"],"r":null,"q":""},{"s":"/wellness-center-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/payment-options/","t":"/schedule/","c":1,"a":["Schedule Your First Visit"],"r":null,"q":""},{"s":"/payment-options/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/services/neck-pain-headache-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/services/neck-pain-headache-colleyville/","t":"/videos/neck-pain-headaches/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/neck-pain-headache-colleyville/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["pediatric visits"],"r":null,"q":""},{"s":"/services/neck-pain-headache-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/services/posture-desk-strain-colleyville/","t":"/schedule/","c":1,"a":["Schedule Today"],"r":null,"q":""},{"s":"/services/posture-desk-strain-colleyville/","t":"/videos/desk-posture-strain/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/posture-desk-strain-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/services/posture-movement-assessment-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/services/posture-movement-assessment-colleyville/","t":"/videos/posture-movement-assessment/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/posture-movement-assessment-colleyville/","t":"/services/nervous-system-assessment-colleyville/","c":1,"a":["Nervous System Assessment"],"r":null,"q":""},{"s":"/services/posture-movement-assessment-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/services/nervous-system-assessment-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/services/nervous-system-assessment-colleyville/","t":"/videos/cla-insight-scans/","c":1,"a":["Watch the full video with transcript →"],"r":null,"q":""},{"s":"/services/nervous-system-assessment-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/what-to-expect/","t":"/schedule/","c":1,"a":["Schedule Your First Visit"],"r":null,"q":""},{"s":"/what-to-expect/","t":"/payment-options/","c":1,"a":["pricing and payment options"],"r":null,"q":""},{"s":"/what-to-expect/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/terms-of-service/","t":"/privacy-policy/","c":1,"a":["Privacy Policy"],"r":null,"q":""},{"s":"/terms-of-service/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/family-chiropractor-colleyville/","c":1,"a":["Family Chiropractic Care"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["Pediatric Chiropractic Care"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["Prenatal Chiropractic Care"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/back-pain-sciatica-colleyville/","c":1,"a":["Back Pain & Sciatica"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/sports-chiropractic-care-colleyville/","c":1,"a":["Sports & Active Adult Care"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/neck-pain-headache-colleyville/","c":1,"a":["Neck Pain & Headache Relief"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/posture-desk-strain-colleyville/","c":1,"a":["Posture & Desk-Related Strain"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/posture-movement-assessment-colleyville/","c":1,"a":["Posture & Movement Assessment"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/services/nervous-system-assessment-colleyville/","c":1,"a":["Nervous System Assessment"],"r":null,"q":""},{"s":"/areas-we-serve/colleyville-tx/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/conditions/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/conditions/","t":"/symptoms/","c":1,"a":["Visit our Symptoms page →"],"r":null,"q":""},{"s":"/conditions/","t":"/conditions/vagus-nerve-dysfunction/","c":1,"a":["Vagus Nerve Dysfunction See how we approach i"],"r":null,"q":""},{"s":"/conditions/","t":"/conditions/scoliosis-colleyville/","c":1,"a":["Scoliosis See how we approach it →"],"r":null,"q":""},{"s":"/conditions/","t":"/conditions/ear-infections-colleyville/","c":1,"a":["Ear Infections See how we approach it →"],"r":null,"q":""},{"s":"/conditions/","t":"/conditions/pinched-nerve-colleyville/","c":1,"a":["Pinched Nerve See how we approach it →"],"r":null,"q":""},{"s":"/conditions/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/what-is-cla-insight-scanning/","t":"/services/nervous-system-assessment-colleyville/","c":1,"a":["nervous system assessment in Colleyville"],"r":null,"q":""},{"s":"/what-is-cla-insight-scanning/","t":"/services/posture-movement-assessment-colleyville/","c":1,"a":["posture and movement assessment"],"r":null,"q":""},{"s":"/what-is-cla-insight-scanning/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/what-is-cla-insight-scanning/","t":"/about/","c":1,"a":["Meet Dr. Williams"],"r":null,"q":""},{"s":"/what-is-cla-insight-scanning/","t":"/blog/","c":1,"a":["More from Dr. Williams on the blog >"],"r":null,"q":""},{"s":"/what-is-cla-insight-scanning/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/symptoms/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/symptoms/","t":"/conditions/","c":1,"a":["Visit our Conditions page →"],"r":null,"q":""},{"s":"/symptoms/","t":"/symptoms/pregnancy-back-pain-colleyville/","c":1,"a":["Pregnancy Back Pain See how we approach it →"],"r":null,"q":""},{"s":"/symptoms/","t":"/symptoms/colic-colleyville/","c":1,"a":["Infant Colic See how we approach it →"],"r":null,"q":""},{"s":"/symptoms/","t":"/symptoms/poor-sleep-colleyville/","c":1,"a":["Poor Sleep See how we approach it →"],"r":null,"q":""},{"s":"/symptoms/","t":"/symptoms/digestive-discomfort-colleyville/","c":1,"a":["Digestive Discomfort See how we approach it →"],"r":null,"q":""},{"s":"/symptoms/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/reviews/","t":"/schedule/","c":1,"a":["Schedule Your First Visit"],"r":null,"q":""},{"s":"/reviews/","t":"/reviews/brian-neck-pain-story/","c":1,"a":["Watch Brian’s full story →"],"r":null,"q":""},{"s":"/reviews/","t":"/reviews/jb-ongoing-care-story/","c":1,"a":["Watch JB’s full story →"],"r":null,"q":""},{"s":"/reviews/","t":"/reviews/marisa-back-neck-pain-story/","c":1,"a":["Watch Marisa’s full story →"],"r":null,"q":""},{"s":"/conditions/vagus-nerve-dysfunction/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/conditions/vagus-nerve-dysfunction/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/family-chiropractor-north-richland-hills/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal care"],"r":null,"q":""},{"s":"/family-chiropractor-north-richland-hills/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["pediatric care"],"r":null,"q":""},{"s":"/family-chiropractor-north-richland-hills/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/family-chiropractor-north-richland-hills/","t":"/schedule/","c":1,"a":["Book Your First Appointment"],"r":null,"q":""},{"s":"/symptoms/pregnancy-back-pain-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/symptoms/pregnancy-back-pain-colleyville/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["Webster Technique"],"r":null,"q":""},{"s":"/symptoms/pregnancy-back-pain-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/symptoms/poor-sleep-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/symptoms/poor-sleep-colleyville/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["Webster Technique approach adapted for infant"],"r":null,"q":""},{"s":"/symptoms/poor-sleep-colleyville/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["Webster Technique"],"r":null,"q":""},{"s":"/symptoms/poor-sleep-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/conditions/scoliosis-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/conditions/scoliosis-colleyville/","t":"/areas-we-serve/colleyville-tx/","c":1,"a":["Colleyville"],"r":null,"q":""},{"s":"/conditions/scoliosis-colleyville/","t":"/family-chiropractor-north-richland-hills/","c":1,"a":["North Richland Hills"],"r":null,"q":""},{"s":"/conditions/scoliosis-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/symptoms/colic-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/symptoms/colic-colleyville/","t":"/areas-we-serve/colleyville-tx/","c":1,"a":["Colleyville"],"r":null,"q":""},{"s":"/symptoms/colic-colleyville/","t":"/family-chiropractor-north-richland-hills/","c":1,"a":["North Richland Hills"],"r":null,"q":""},{"s":"/symptoms/colic-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/symptoms/digestive-discomfort-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/symptoms/digestive-discomfort-colleyville/","t":"/areas-we-serve/colleyville-tx/","c":1,"a":["Colleyville"],"r":null,"q":""},{"s":"/symptoms/digestive-discomfort-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/conditions/ear-infections-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/conditions/ear-infections-colleyville/","t":"/areas-we-serve/colleyville-tx/","c":1,"a":["Colleyville"],"r":null,"q":""},{"s":"/conditions/ear-infections-colleyville/","t":"/family-chiropractor-north-richland-hills/","c":1,"a":["North Richland Hills"],"r":null,"q":""},{"s":"/conditions/ear-infections-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/conditions/pinched-nerve-colleyville/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/conditions/pinched-nerve-colleyville/","t":"/areas-we-serve/colleyville-tx/","c":1,"a":["Colleyville"],"r":null,"q":""},{"s":"/conditions/pinched-nerve-colleyville/","t":"/family-chiropractor-north-richland-hills/","c":1,"a":["North Richland Hills"],"r":null,"q":""},{"s":"/conditions/pinched-nerve-colleyville/","t":"/","c":1,"a":["[img]"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/pelvic-pain-vs-sciatica-in-pregnancy/","c":1,"a":["telling pelvic pain, sciatica and round ligam"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/services/nervous-system-assessment-colleyville/","c":1,"a":["nervous system assessment"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/what-is-the-webster-technique/","c":1,"a":["plain-English guide to the Webster Technique"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal chiropractic care in Colleyville"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/what-to-expect/","c":1,"a":["what happens at your first visit"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/about/","c":1,"a":["Meet Dr. Williams"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/blog/","c":1,"a":["More from Dr. Williams on the blog >"],"r":null,"q":""},{"s":"/chiropractic-care-during-pregnancy/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/what-is-the-webster-technique/","t":"/pelvic-pain-vs-sciatica-in-pregnancy/","c":1,"a":["pelvic pain, sciatica and round ligament pain"],"r":null,"q":""},{"s":"/what-is-the-webster-technique/","t":"/chiropractic-care-during-pregnancy/","c":1,"a":["what the research says about chiropractic saf"],"r":null,"q":""},{"s":"/what-is-the-webster-technique/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal chiropractic care in Colleyville"],"r":null,"q":""},{"s":"/what-is-the-webster-technique/","t":"/what-to-expect/","c":1,"a":["what happens at your first visit"],"r":null,"q":""},{"s":"/what-is-the-webster-technique/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/what-is-the-webster-technique/","t":"/about/","c":1,"a":["Meet Dr. Williams"],"r":null,"q":""},{"s":"/what-is-the-webster-technique/","t":"/blog/","c":1,"a":["More from Dr. Williams on the blog >"],"r":null,"q":""},{"s":"/what-is-the-webster-technique/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/sleeping-with-back-pain-during-pregnancy/","t":"/pelvic-pain-vs-sciatica-in-pregnancy/","c":1,"a":["telling pelvic pain, sciatica and round ligam"],"r":null,"q":""},{"s":"/sleeping-with-back-pain-during-pregnancy/","t":"/symptoms/pregnancy-back-pain-colleyville/","c":1,"a":["pregnancy back pain in Colleyville"],"r":null,"q":""},{"s":"/sleeping-with-back-pain-during-pregnancy/","t":"/symptoms/poor-sleep-colleyville/","c":1,"a":["poor sleep and restless nights"],"r":null,"q":""},{"s":"/sleeping-with-back-pain-during-pregnancy/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal chiropractic care"],"r":null,"q":""},{"s":"/sleeping-with-back-pain-during-pregnancy/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/sleeping-with-back-pain-during-pregnancy/","t":"/about/","c":1,"a":["Meet Dr. Williams"],"r":null,"q":""},{"s":"/sleeping-with-back-pain-during-pregnancy/","t":"/blog/","c":1,"a":["More from Dr. Williams on the blog >"],"r":null,"q":""},{"s":"/sleeping-with-back-pain-during-pregnancy/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/chiropractic-care-during-pregnancy/","c":1,"a":["whether chiropractic care is safe during preg"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/symptoms/pregnancy-back-pain-colleyville/","c":1,"a":["back pain during pregnancy"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/services/back-pain-sciatica-colleyville/","c":1,"a":["back pain and sciatica in Colleyville"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/sleeping-with-back-pain-during-pregnancy/","c":1,"a":["sleeping with back pain during pregnancy"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal chiropractic at Radiant"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/about/","c":1,"a":["Meet Dr. Williams"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/blog/","c":1,"a":["More from Dr. Williams on the blog >"],"r":null,"q":""},{"s":"/pelvic-pain-vs-sciatica-in-pregnancy/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/chiropractor-for-kids/","t":"/payment-options/","c":1,"a":["payment options page"],"r":null,"q":""},{"s":"/chiropractor-for-kids/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["pediatric chiropractic care in Colleyville"],"r":null,"q":""},{"s":"/chiropractor-for-kids/","t":"/faqs/","c":1,"a":["answers to common chiropractic questions"],"r":null,"q":""},{"s":"/chiropractor-for-kids/","t":"/schedule/","c":1,"a":["Schedule Now"],"r":null,"q":""},{"s":"/chiropractor-for-kids/","t":"/about/","c":1,"a":["Meet Dr. Williams"],"r":null,"q":""},{"s":"/chiropractor-for-kids/","t":"/blog/","c":1,"a":["More from Dr. Williams on the blog >"],"r":null,"q":""},{"s":"/chiropractor-for-kids/","t":"/","c":1,"a":["connect@radiantchirotx.com"],"r":null,"q":""},{"s":"/videos/","t":"/videos/welcome/","c":1,"a":["Welcome to RadiantDr. Cameron explains the ap"],"r":null,"q":""},{"s":"/videos/","t":"/videos/meet-dr-cameron/","c":1,"a":["Meet Dr. CameronHow migraines in college led"],"r":null,"q":""},{"s":"/videos/","t":"/videos/low-back-pain-sciatica/","c":1,"a":["Low Back Pain and SciaticaWhat we look at whe"],"r":null,"q":""},{"s":"/videos/","t":"/videos/neck-pain-headaches/","c":1,"a":["Neck Pain and HeadachesBreaking the cycle of"],"r":null,"q":""},{"s":"/videos/","t":"/videos/desk-posture-strain/","c":1,"a":["Sitting All DayWhy desk days leave you stiff"],"r":null,"q":""},{"s":"/videos/","t":"/videos/posture-movement-assessment/","c":1,"a":["Posture and MovementA quick test you can try,"],"r":null,"q":""},{"s":"/videos/","t":"/videos/cla-insight-scans/","c":1,"a":["CLA Insight ScansThe three scans we use to ch"],"r":null,"q":""},{"s":"/videos/","t":"/videos/active-lifestyle-chiropractic/","c":1,"a":["Active AdultsKeeping lifters, golfers, and ru"],"r":null,"q":""},{"s":"/videos/","t":"/videos/prenatal-chiropractic/","c":1,"a":["Prenatal ChiropracticIs it safe during pregna"],"r":null,"q":""},{"s":"/videos/","t":"/videos/pediatric-chiropractic/","c":1,"a":["Babies and KidsGentle care for infants and gr"],"r":null,"q":""},{"s":"/videos/","t":"/videos/family-chiropractic/","c":1,"a":["Family ChiropracticCare for every stage of fa"],"r":null,"q":""},{"s":"/videos/","t":"/reviews/brian-neck-pain-story/","c":1,"a":["Brian's StoryNeck movement, shoulder tension,"],"r":null,"q":""},{"s":"/videos/","t":"/reviews/jb-ongoing-care-story/","c":1,"a":["JB's StoryWhy he trusts Dr. Cameron for ongoi"],"r":null,"q":""},{"s":"/videos/","t":"/reviews/marisa-back-neck-pain-story/","c":1,"a":["Marisa's StoryBack pain, neck tension, and st"],"r":null,"q":""},{"s":"/videos/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/reviews/brian-neck-pain-story/","t":"/services/neck-pain-headache-colleyville/","c":1,"a":["neck pain and headache care"],"r":null,"q":""},{"s":"/reviews/brian-neck-pain-story/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/reviews/brian-neck-pain-story/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/reviews/brian-neck-pain-story/","t":"/reviews/","c":1,"a":["← Back to all patient reviews"],"r":null,"q":""},{"s":"/reviews/jb-ongoing-care-story/","t":"/services/family-chiropractor-colleyville/","c":1,"a":["family chiropractic care"],"r":null,"q":""},{"s":"/reviews/jb-ongoing-care-story/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/reviews/jb-ongoing-care-story/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/reviews/jb-ongoing-care-story/","t":"/reviews/","c":1,"a":["← Back to all patient reviews"],"r":null,"q":""},{"s":"/reviews/marisa-back-neck-pain-story/","t":"/services/neck-pain-headache-colleyville/","c":1,"a":["neck pain and headache care"],"r":null,"q":""},{"s":"/reviews/marisa-back-neck-pain-story/","t":"/services/back-pain-sciatica-colleyville/","c":1,"a":["back pain and sciatica care"],"r":null,"q":""},{"s":"/reviews/marisa-back-neck-pain-story/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/reviews/marisa-back-neck-pain-story/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/reviews/marisa-back-neck-pain-story/","t":"/reviews/","c":1,"a":["← Back to all patient reviews"],"r":null,"q":""},{"s":"/videos/low-back-pain-sciatica/","t":"/services/back-pain-sciatica-colleyville/","c":1,"a":["back pain and sciatica care"],"r":null,"q":""},{"s":"/videos/low-back-pain-sciatica/","t":"/conditions/pinched-nerve-colleyville/","c":1,"a":["pinched nerves"],"r":null,"q":""},{"s":"/videos/low-back-pain-sciatica/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/low-back-pain-sciatica/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/low-back-pain-sciatica/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/active-lifestyle-chiropractic/","t":"/services/sports-chiropractic-care-colleyville/","c":1,"a":["sports and active adult chiropractic care"],"r":null,"q":""},{"s":"/videos/active-lifestyle-chiropractic/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/active-lifestyle-chiropractic/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/active-lifestyle-chiropractic/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/posture-movement-assessment/","t":"/services/posture-movement-assessment-colleyville/","c":1,"a":["posture and movement assessments"],"r":null,"q":""},{"s":"/videos/posture-movement-assessment/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/posture-movement-assessment/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/posture-movement-assessment/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/desk-posture-strain/","t":"/services/posture-desk-strain-colleyville/","c":1,"a":["posture and desk-related strain"],"r":null,"q":""},{"s":"/videos/desk-posture-strain/","t":"/services/posture-movement-assessment-colleyville/","c":1,"a":["posture and movement assessments"],"r":null,"q":""},{"s":"/videos/desk-posture-strain/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/desk-posture-strain/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/desk-posture-strain/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/cla-insight-scans/","t":"/services/nervous-system-assessment-colleyville/","c":1,"a":["nervous system assessments"],"r":null,"q":""},{"s":"/videos/cla-insight-scans/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/cla-insight-scans/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/cla-insight-scans/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/neck-pain-headaches/","t":"/services/neck-pain-headache-colleyville/","c":1,"a":["neck pain and headache care"],"r":null,"q":""},{"s":"/videos/neck-pain-headaches/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/neck-pain-headaches/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/neck-pain-headaches/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/prenatal-chiropractic/","t":"/services/prenatal-chiropractor-colleyville/","c":1,"a":["prenatal chiropractic care"],"r":null,"q":""},{"s":"/videos/prenatal-chiropractic/","t":"/symptoms/pregnancy-back-pain-colleyville/","c":1,"a":["pregnancy back pain"],"r":null,"q":""},{"s":"/videos/prenatal-chiropractic/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/prenatal-chiropractic/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/prenatal-chiropractic/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/pediatric-chiropractic/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["pediatric chiropractic care"],"r":null,"q":""},{"s":"/videos/pediatric-chiropractic/","t":"/symptoms/colic-colleyville/","c":1,"a":["colic"],"r":null,"q":""},{"s":"/videos/pediatric-chiropractic/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/pediatric-chiropractic/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/pediatric-chiropractic/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/family-chiropractic/","t":"/services/family-chiropractor-colleyville/","c":1,"a":["family chiropractic care"],"r":null,"q":""},{"s":"/videos/family-chiropractic/","t":"/services/pediatric-chiropractor-colleyville/","c":1,"a":["pediatric chiropractic"],"r":null,"q":""},{"s":"/videos/family-chiropractic/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/family-chiropractic/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/family-chiropractic/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/meet-dr-cameron/","t":"/about/","c":1,"a":["Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/meet-dr-cameron/","t":"/services/","c":1,"a":["our services"],"r":null,"q":""},{"s":"/videos/meet-dr-cameron/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/meet-dr-cameron/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/meet-dr-cameron/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/videos/welcome/","t":"/what-to-expect/","c":1,"a":["what to expect at your first visit"],"r":null,"q":""},{"s":"/videos/welcome/","t":"/services/","c":1,"a":["our services"],"r":null,"q":""},{"s":"/videos/welcome/","t":"/about/","c":1,"a":["Dr. Cameron"],"r":null,"q":""},{"s":"/videos/welcome/","t":"/schedule/","c":1,"a":["Book Your First Visit"],"r":null,"q":""},{"s":"/videos/welcome/","t":"/videos/","c":1,"a":["← All videos from Radiant Chiropractic"],"r":null,"q":""},{"s":"/blog/","t":"/chiropractor-for-kids/","c":2,"a":["Blog index, page 1"],"r":null,"q":"","pg":1},{"s":"/blog/","t":"/pelvic-pain-vs-sciatica-in-pregnancy/","c":2,"a":["Blog index, page 1"],"r":null,"q":"","pg":1},{"s":"/blog/","t":"/sleeping-with-back-pain-during-pregnancy/","c":2,"a":["Blog index, page 1"],"r":null,"q":"","pg":1},{"s":"/blog/","t":"/what-is-the-webster-technique/","c":2,"a":["Blog index, page 1"],"r":null,"q":"","pg":1},{"s":"/blog/","t":"/chiropractic-care-during-pregnancy/","c":2,"a":["Blog index, page 1"],"r":null,"q":"","pg":1},{"s":"/blog/","t":"/what-is-cla-insight-scanning/","c":2,"a":["Blog index, page 1"],"r":null,"q":"","pg":1}],"navCount":35,"pageCount":56,"topics":[{"k":"back","name":"Back pain and sciatica","pillar":"/services/back-pain-sciatica-colleyville/"},{"k":"neck","name":"Neck pain and headache","pillar":"/services/neck-pain-headache-colleyville/"},{"k":"posture","name":"Posture and desk strain","pillar":"/services/posture-desk-strain-colleyville/"},{"k":"prenatal","name":"Prenatal and pregnancy","pillar":"/services/prenatal-chiropractor-colleyville/"},{"k":"pediatric","name":"Pediatric and infant","pillar":"/services/pediatric-chiropractor-colleyville/"},{"k":"family","name":"Family chiropractic","pillar":"/services/family-chiropractor-colleyville/"},{"k":"sports","name":"Sports and active adults","pillar":"/services/sports-chiropractic-care-colleyville/"},{"k":"nervous","name":"Nervous system and wellness","pillar":"/services/nervous-system-assessment-colleyville/"},{"k":"local","name":"Local areas","pillar":null},{"k":"core","name":"Site-wide pages","pillar":null}],"site":"https://radiantchirotx.com","domain":"radiantchirotx.com","name":"Radiant Chiro Link Map","crawled":"Oct 20, 2026","ring":["back","neck","posture","sports","family","pediatric","prenatal","nervous","local"]}</script>
+<script>
+(function(){
+const G = JSON.parse(document.getElementById('data').textContent);
+const SITE = G.site.replace(/\/$/,'');
+const TYPES = {
+  core:{name:'Core pages', one:'Core page', sym:d3.symbolCircle},
+  svc:{name:'Services', one:'Service page', sym:d3.symbolSquare},
+  cond:{name:'Conditions', one:'Condition page', sym:d3.symbolCircle},
+  sym:{name:'Symptoms', one:'Symptom page', sym:d3.symbolDiamond},
+  blog:{name:'Blog posts', one:'Blog post', sym:d3.symbolTriangle},
+  area:{name:'Areas served', one:'Area page', sym:d3.symbolStar},
+  video:{name:'Videos', one:'Video page', sym:d3.symbolWye},
+  review:{name:'Patient stories', one:'Patient story', sym:d3.symbolDiamond2},
+  broken:{name:'Missing (404)', one:'Missing page', sym:d3.symbolCross}
+};
+const TYPE_ORDER = ['core','svc','cond','sym','blog','area','video','review','broken'];
+const KIND = {1:'Written into the page',0:'Template block',2:'Blog index'};
+const TOPICS = G.topics;
+const TOPIC = Object.fromEntries(TOPICS.map(t=>[t.k,t]));
+const TCOL = {}; { let i=0; TOPICS.forEach(t=>{ TCOL[t.k] = t.k==='core' ? 'var(--t-core)' : t.k==='local' ? 'var(--t-local)' : `var(--k${i++})`; }); }
+
+const byId = new Map(G.nodes.map(n=>[n.id,n]));
+G.nodes.forEach(n=>{n.inC=0;n.inT=0;n.inI=0;n.outC=0;n.outT=0;n.ins=[];n.outs=[]; if(!n.tp) n.tp='core';});
+G.edges.forEach((e,i)=>{
+  e.i=i; const s=byId.get(e.s), t=byId.get(e.t); e.S=s; e.T=t;
+  s.outs.push(e); t.ins.push(e);
+  if(e.c===1){t.inC++; s.outC++;} else if(e.c===0){t.inT++; s.outT++;} else t.inI++;
+});
+const isBroken = n=>n.g==='broken';
+const isUtil = n=>n.tp==='core';
+const pageLink = e=>e.c===0||e.c===1; // a real page-to-page link (not the blog index)
+
+/* ---------- topic cluster health ---------- */
+const pillarOf = n=>{ const t=TOPIC[n.tp]; return t&&t.pillar&&t.pillar!==n.id ? byId.get(t.pillar) : null; };
+const linksTo = (a,b)=>a.outs.some(e=>pageLink(e)&&e.t===b.id);
+const clusters = TOPICS.filter(t=>t.k!=='core').map(t=>{
+  const members = G.nodes.filter(n=>n.tp===t.k);
+  const pillar = t.pillar ? byId.get(t.pillar) : null;
+  const spokes = pillar ? members.filter(n=>n!==pillar) : members;
+  const up = pillar ? spokes.filter(n=>linksTo(n,pillar)) : [];
+  const down = pillar ? spokes.filter(n=>linksTo(pillar,n)) : [];
+  return {t, members, pillar, spokes, up, down};
+});
+const CL = Object.fromEntries(clusters.map(c=>[c.t.k,c]));
+
+/* ---------- link communities (grouping the link data finds on its own) ---------- */
+function louvain(ids, wedges){
+  const idx=new Map(ids.map((id,i)=>[id,i]));
+  let level=ids.map(()=>new Map());
+  wedges.forEach(([a,b,w])=>{const i=idx.get(a),j=idx.get(b); if(i===undefined||j===undefined||i===j) return; level[i].set(j,(level[i].get(j)||0)+w); level[j].set(i,(level[j].get(i)||0)+w);});
+  let map=ids.map((_,i)=>i);
+  for(let pass=0;pass<12;pass++){
+    const N=level.length, k=level.map(m=>{let s=0;m.forEach(w=>s+=w);return s;});
+    const m2=k.reduce((a,b)=>a+b,0); if(!m2) break;
+    const com=[...Array(N).keys()], tot=k.slice();
+    let moved=true, any=false, guard=0;
+    while(moved && guard++<60){
+      moved=false;
+      for(let i=0;i<N;i++){
+        const ci=com[i], wc=new Map();
+        level[i].forEach((w,j)=>{ if(j!==i) wc.set(com[j],(wc.get(com[j])||0)+w); });
+        tot[ci]-=k[i];
+        let best=ci, bestGain=(wc.get(ci)||0)-tot[ci]*k[i]/m2;
+        wc.forEach((w,c)=>{ const g=w-tot[c]*k[i]/m2; if(g>bestGain+1e-9){bestGain=g;best=c;} });
+        tot[best]+=k[i];
+        if(best!==ci){com[i]=best; moved=true; any=true;}
+      }
+    }
+    if(!any) break;
+    const ren=new Map(); com.forEach(c=>{ if(!ren.has(c)) ren.set(c,ren.size); });
+    const nc=com.map(c=>ren.get(c));
+    const next=Array.from({length:ren.size},()=>new Map());
+    level.forEach((m,i)=>m.forEach((w,j)=>{ const a=nc[i], b=nc[j]; next[a].set(b,(next[a].get(b)||0)+w); }));
+    map=map.map(x=>nc[x]); level=next;
+  }
+  return new Map(ids.map((id,i)=>[id,map[i]]));
+}
+const commIds = G.nodes.filter(n=>!isUtil(n)&&!isBroken(n)).map(n=>n.id);
+const commSet = new Set(commIds);
+const wedges = G.edges.filter(e=>pageLink(e)&&commSet.has(e.s)&&commSet.has(e.t)).map(e=>[e.s,e.t,e.c===1?1:0.5]);
+const rawComm = louvain(commIds, wedges);
+const commMembers = d3.groups(commIds, id=>rawComm.get(id)).sort((a,b)=>b[1].length-a[1].length);
+const COMMS = [];
+commMembers.forEach(([c,ids])=>{
+  const nodes = ids.map(id=>byId.get(id));
+  const big = ids.length>=3 && COMMS.length<8;
+  const key = big ? 'k'+COMMS.length : 'x';
+  nodes.forEach(n=>n.cm=key);
+  if(big){
+    const lead = nodes.find(n=>n.pil) || [...nodes].sort((a,b)=>(b.inC+b.inT)-(a.inC+a.inT))[0];
+    const topicMix = d3.rollups(nodes, v=>v.length, n=>n.tp).sort((a,b)=>b[1]-a[1]);
+    COMMS.push({k:key, lead, nodes, topicMix});
+  }
+});
+const seenTopic={};
+COMMS.forEach(c=>{ const tk=c.topicMix[0][0]; seenTopic[tk]=(seenTopic[tk]||0)+1; c.topic=tk; c.name='Mostly '+TOPIC[tk].name.toLowerCase()+(seenTopic[tk]>1?' ('+seenTopic[tk]+')':''); c.pct=Math.round(c.topicMix[0][1]/c.nodes.length*100); });
+const otherComm = G.nodes.filter(n=>n.cm==='x');
+G.nodes.forEach(n=>{ if(isUtil(n)||isBroken(n)) n.cm='core'; });
+const COMM = Object.fromEntries(COMMS.map(c=>[c.k,c]));
+
+/* ---------- grouping modes ---------- */
+const MODES = {
+  topic:{label:'Topics', groups:()=>TOPICS.map(t=>({k:t.k, name:t.name, color:`${TCOL[t.k]}`})), of:n=>n.tp},
+  section:{label:'Sections', groups:()=>TYPE_ORDER.map(g=>({k:g, name:TYPES[g].name, color:`var(--c-${g})`})), of:n=>n.g},
+  links:{label:'Topics', groups:()=>TOPICS.map(t=>({k:t.k, name:t.name, color:`${TCOL[t.k]}`})), of:n=>n.tp, layoutOf:n=>n.cm}
+};
+const groupName = (mode,k)=>{ if(mode==='links'){ const c=COMM[k]; return c?c.name:k; } const g=MODES[mode].groups().find(g=>g.k===k); return g?g.name:k; };
+const colorOf = n=>{ const g=MODES[state.mode].groups().find(g=>g.k===MODES[state.mode].of(n)); return g?g.color:'var(--t-x)'; };
+
+/* ---------- issues (computed from the data) ---------- */
+const brokenEdges = G.edges.filter(e=>isBroken(e.T));
+const redirectEdges = G.edges.filter(e=>e.r);
+const redirGroups = d3.rollups(redirectEdges, v=>({n:v.length, t:v[0].t, tpl:v.filter(e=>e.c===0).length}), e=>e.r).sort((a,b)=>b[1].n-a[1].n);
+const pages = G.nodes.filter(n=>!isBroken(n));
+const noInbound = pages.filter(n=>n.inC+n.inT===0);
+const blogIndexOnly = noInbound.filter(n=>n.g==='blog' && n.inI>0);
+const noInboundOther = noInbound.filter(n=>!(n.g==='blog' && n.inI>0));
+const noindex = pages.filter(n=>n.ni);
+const deadEnds = pages.filter(n=>n.outC===0 && n.outT===0 && !n.arch);
+const idxPage = n=>{const e=n.ins.find(e=>e.c===2);return e?e.pg:null;};
+const notUp = clusters.filter(c=>c.pillar).flatMap(c=>c.spokes.filter(n=>!c.up.includes(n)));
+
+/* ---------- state ---------- */
+let savedMode=null; try{ savedMode=localStorage.getItem('lm-mode'); }catch(e){}
+const state = {mode: MODES[savedMode]?savedMode:'topic', hidden:{topic:new Set(), section:new Set(), links:new Set()}, c1:true, c0:false, c2:true, util:false, sel:null, view:'map'};
+
+document.getElementById('subline').textContent = `${G.domain} · ${G.pageCount} published pages · crawled ${G.crawled}`;
+document.getElementById('brandName').textContent = G.name;
+const issueTotal = brokenEdges.length + redirGroups.length + noInbound.length + notUp.length;
+document.getElementById('issueCount').textContent = `(${issueTotal})`;
+
+const typeSym = (g,size)=>d3.symbol().type(TYPES[g].sym).size(size)();
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function dotN(n){return `<svg class="dot" width="12" height="12" viewBox="-6 -6 12 12" aria-hidden="true"><path d="${typeSym(n.g,50)}" fill="${colorOf(n)}"/></svg>`;}
+function tdot(color){return `<span class="tdot" style="background:${color}"></span>`;}
+
+/* ---------- filters ---------- */
+const chipWrap = document.getElementById('groupChips');
+function buildChips(){
+  const mode=state.mode, hid=state.hidden[mode];
+  chipWrap.innerHTML='';
+  const lbl=document.createElement('span'); lbl.className='lbl'; lbl.style.marginLeft='6px'; lbl.textContent=MODES[mode].label; chipWrap.appendChild(lbl);
+  MODES[mode].groups().forEach(g=>{
+    const cnt=G.nodes.filter(n=>MODES[mode].of(n)===g.k).length; if(!cnt) return;
+    if(g.k==='core' && mode!=='section') return; // site-wide pages have their own toggle
+    const b=document.createElement('button'); b.className='chip'; b.type='button'; b.setAttribute('aria-pressed',!hid.has(g.k));
+    const sw = mode==='section' ? `<svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><path d="${typeSym(g.k,70)}" fill="${g.color}"/></svg>` : tdot(g.color);
+    b.innerHTML=`${sw}<b>${esc(g.name)}</b><span class="n">${cnt}</span>`;
+    b.addEventListener('click',()=>{ if(hid.has(g.k)) hid.delete(g.k); else hid.add(g.k); b.setAttribute('aria-pressed',!hid.has(g.k)); applyFilters(); });
+    chipWrap.appendChild(b);
+  });
+}
+[['t-content','c1'],['t-tpl','c0'],['t-idx','c2'],['t-util','util']].forEach(([id,k])=>{
+  const el=document.getElementById(id); el.checked=state[k]; el.addEventListener('change',()=>{state[k]=el.checked; applyFilters();});
+});
+const kindOn = e=> (e.c===1&&state.c1)||(e.c===0&&state.c0)||(e.c===2&&state.c2);
+const nodeOn = n=> !state.hidden[state.mode].has(MODES[state.mode].of(n));
+const edgeOn = e=> kindOn(e) && nodeOn(e.S) && nodeOn(e.T) && (state.util || (!isUtil(e.S)&&!isUtil(e.T)) || e.s===state.sel || e.t===state.sel);
+
+/* ---------- layouts ---------- */
+const svg = d3.select('#svg');
+const mapEl = document.getElementById('map');
+let W = mapEl.clientWidth||900, H = mapEl.clientHeight||600;
+const root = svg.append('g');
+const gClabels = root.append('g'), gEdges = root.append('g'), gNodes = root.append('g'), gLabels = root.append('g');
+const baseRad = n => isBroken(n) ? 7 : 3.2 + Math.sqrt(n.inC + n.inT*0.4 + n.inI) * 1.35;
+const rad = n => n.pil ? Math.max(baseRad(n), 13) : baseRad(n);
+
+const RING = 430, OUTER = 780;
+function ringAnchors(keys, r){ const out={}; keys.forEach((k,i)=>{ const a=-Math.PI/2 + i*2*Math.PI/keys.length; out[k]=[Math.cos(a)*r, Math.sin(a)*r]; }); return out; }
+// related clusters sit next to each other around the ring
+const TOPIC_RING = G.ring || TOPICS.map(t=>t.k).filter(k=>k!=='core');
+const ANCH = {
+  topic: ringAnchors(TOPIC_RING, RING),
+  section: {core:[0,0], svc:[-0.05*RING*2.1,-0.62*RING*2.1], cond:[0.62*RING*2.1,-0.18*RING*2.1], sym:[0.32*RING*2.1,0.6*RING*2.1], blog:[-0.6*RING*2.1,0.36*RING*2.1], area:[-0.62*RING*2.1,-0.34*RING*2.1], video:[-0.2*RING*2.1,0.75*RING*2.1], review:[0.75*RING*2.1,0.25*RING*2.1], broken:[0.85*RING*2.1,0.55*RING*2.1]},
+  links: Object.assign(ringAnchors(COMMS.map(c=>c.k), RING), {x:[0,0]})
+};
+function computeLayout(mode){
+  const of=MODES[mode].layoutOf||MODES[mode].of, anchors=ANCH[mode];
+  const outer = mode!=='section';
+  const util = G.nodes.filter(n=>outer && (isUtil(n)||isBroken(n)));
+  const P = G.nodes.map(n=>{
+    const u = outer && (isUtil(n)||isBroken(n));
+    let a = anchors[of(n)] || [0,0];
+    if(u){ const i=util.indexOf(n), ang=-Math.PI/2 + i*2*Math.PI/util.length; a=[Math.cos(ang)*OUTER, Math.sin(ang)*OUTER]; }
+    const p = {n, ax:a[0], ay:a[1], u, x:a[0]+(Math.random()-.5)*40, y:a[1]+(Math.random()-.5)*40};
+    if(mode==='topic' && n.pil){ p.fx=a[0]; p.fy=a[1]; }
+    return p;
+  });
+  const PI = new Map(P.map(p=>[p.n.id,p]));
+  const links = G.edges.filter(e=>e.c!==0 && !PI.get(e.s).u && !PI.get(e.t).u).map(e=>({source:PI.get(e.s), target:PI.get(e.t)}));
+  const strength = mode==='links' ? .05 : mode==='topic' ? .012 : .035;
+  const pull = mode==='topic' ? .16 : mode==='links' ? .12 : .11;
+  const sim = d3.forceSimulation(P)
+    .force('link', d3.forceLink(links).distance(55).strength(strength))
+    .force('charge', d3.forceManyBody().strength(p=>-34-rad(p.n)*5).distanceMax(300))
+    .force('collide', d3.forceCollide().radius(p=>rad(p.n)+3))
+    .force('x', d3.forceX(p=>p.ax).strength(p=>p.u?.5:pull))
+    .force('y', d3.forceY(p=>p.ay).strength(p=>p.u?.5:pull))
+    .stop();
+  for(let i=0;i<320;i++) sim.tick();
+  const pos = new Map(P.map(p=>[p.n.id,{x:p.x,y:p.y}]));
+  // cluster label positions: above each group's members
+  const labels = [];
+  if(mode!=='section'){
+    d3.groups(P.filter(p=>!p.u), p=>of(p.n)).forEach(([k,ps])=>{
+      if(k==='x' || ps.length<2) return;
+      const cx=d3.mean(ps,p=>p.x), top=d3.min(ps,p=>p.y-rad(p.n));
+      labels.push({k, x:cx, y:top-(ps.some(p=>p.n.pil)&&mode==='topic'?30:14), name:groupName(mode,k)});
+    });
+  }
+  return {pos, labels};
+}
+const LAYOUT = {};
+['topic','section','links'].forEach(m=>{ LAYOUT[m]=computeLayout(m); });
+G.nodes.forEach(n=>{ const p=LAYOUT[state.mode].pos.get(n.id); n.x=p.x; n.y=p.y; });
+
+/* ---------- drawing ---------- */
+const edgeSel = gEdges.selectAll('line').data(G.edges).join('line')
+  .attr('class', e=>'edge'+(e.c===0?' tpl':'')+(e.c===2?' idx':'')+(e.r?' red':'')+(isBroken(e.T)?' dead':''));
+const nodeSel = gNodes.selectAll('g').data(G.nodes).join('g').attr('class',n=>'node'+(isUtil(n)?' util':'')+(n.pil?' pillar':''));
+nodeSel.filter(n=>n.pil).append('circle').attr('class','ring').attr('r',n=>rad(n)+4);
+nodeSel.append('path').attr('class','shape').attr('d',n=>typeSym(n.g, Math.PI*rad(n)*rad(n)*(n.g==='blog'?1.25:1)));
+nodeSel.filter(n=>n.nav && !n.pil).append('circle').attr('r',n=>rad(n)+3).attr('fill','none').attr('stroke','var(--ink-3)').attr('stroke-width',.8).attr('stroke-opacity',.55);
+const shortT = n => n.t.length>34 ? n.t.slice(0,32)+'…' : n.t;
+const labelSel = gLabels.selectAll('text').data(G.nodes).join('text').attr('class','label').attr('text-anchor','middle').text(shortT);
+let clabelSel = gClabels.selectAll('text');
+const topHubs = new Set([...pages].filter(n=>!isUtil(n)).sort((a,b)=>(b.inC+b.inT)-(a.inC+a.inT)).slice(0,8).map(n=>n.id));
+
+function paint(){
+  nodeSel.select('path.shape').attr('fill',colorOf);
+  clabelSel = gClabels.selectAll('text').data(LAYOUT[state.mode].labels, d=>d.k).join('text').attr('class','clabel').attr('text-anchor','middle').attr('x',d=>d.x).attr('y',d=>d.y).text(d=>d.name.length>42?d.name.slice(0,40)+'…':d.name);
+}
+function draw(){
+  edgeSel.attr('x1',e=>e.S.x).attr('y1',e=>e.S.y).attr('x2',e=>e.T.x).attr('y2',e=>e.T.y);
+  nodeSel.attr('transform',n=>`translate(${n.x},${n.y})`);
+  labelSel.attr('x',n=>n.x).attr('y',n=>n.y-rad(n)-6);
+}
+paint(); draw();
+
+let k = 1;
+const zoom = d3.zoom().scaleExtent([.2,6]).on('zoom',ev=>{root.attr('transform',ev.transform); k=ev.transform.k; updateLabels();});
+svg.call(zoom).on('dblclick.zoom',null);
+function fit(animate){
+  const vis = G.nodes.filter(n=>nodeOn(n) && (state.util || !isUtil(n) || state.mode==='section')); if(!vis.length) return;
+  W = mapEl.clientWidth||W; H = mapEl.clientHeight||H;
+  const xs=d3.extent(vis,n=>n.x), ys=d3.extent(vis,n=>n.y);
+  const bw=xs[1]-xs[0]+120, bh=ys[1]-ys[0]+120;
+  const sc=Math.min(W/bw,H/bh,2.2);
+  const t=d3.zoomIdentity.translate(W/2,H/2).scale(sc).translate(-(xs[0]+xs[1])/2,-(ys[0]+ys[1])/2);
+  (animate?svg.transition().duration(500):svg).call(zoom.transform,t);
+}
+document.getElementById('zin').onclick=()=>svg.transition().duration(250).call(zoom.scaleBy,1.4);
+document.getElementById('zout').onclick=()=>svg.transition().duration(250).call(zoom.scaleBy,1/1.4);
+document.getElementById('zfit').onclick=()=>fit(true);
+
+function setMode(mode){
+  if(mode===state.mode) return;
+  state.mode=mode;
+  try{ localStorage.setItem('lm-mode',mode); }catch(e){}
+  document.querySelectorAll('#modeSeg button').forEach(b=>b.setAttribute('aria-checked',b.dataset.mode===mode));
+  buildChips(); paint(); renderMapNote();
+  const from = new Map(G.nodes.map(n=>[n.id,{x:n.x,y:n.y}])), to = LAYOUT[mode].pos;
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const finish = ()=>{ G.nodes.forEach(n=>{const p=to.get(n.id); n.x=p.x; n.y=p.y;}); draw(); applyFilters(); fit(true); };
+  if(reduce){ finish(); return; }
+  gClabels.attr('opacity',0);
+  const tm = d3.timer(el=>{
+    const t = d3.easeCubicInOut(Math.min(1, el/650));
+    G.nodes.forEach(n=>{ const a=from.get(n.id), b=to.get(n.id); n.x=a.x+(b.x-a.x)*t; n.y=a.y+(b.y-a.y)*t; });
+    draw();
+    if(t>=1){ tm.stop(); gClabels.attr('opacity',1); finish(); }
+  });
+  applyFilters();
+  if(state.view==='table') renderTable();
+  if(!state.sel) renderOverview(); else renderNode(byId.get(state.sel));
+}
+document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('click',()=>setMode(b.dataset.mode)));
+
+// drag a node
+nodeSel.call(d3.drag()
+  .on('start',(ev,n)=>{n._moved=false;})
+  .on('drag',(ev,n)=>{n.x=ev.x;n.y=ev.y;n._moved=true;draw();})
+  .on('end',(ev,n)=>{ if(!n._moved) select(n.id); }));
+
+// tooltip
+const tip = document.getElementById('tip');
+nodeSel.on('pointerenter',(ev,n)=>{
+  tip.innerHTML=`<b></b><span></span>`; tip.querySelector('b').textContent=n.t+(n.pil?' (pillar)':'');
+  tip.querySelector('span').textContent=n.id+(isBroken(n)?'':`  ·  ${TOPIC[n.tp].name}  ·  ${n.inC+n.inT} links in`);
+  tip.hidden=false; moveTip(ev);
+}).on('pointermove',moveTip).on('pointerleave',()=>{tip.hidden=true;});
+function moveTip(ev){const r=mapEl.getBoundingClientRect(); let x=ev.clientX-r.left+14, y=ev.clientY-r.top+14; if(x>r.width-290) x=ev.clientX-r.left-290; tip.style.left=x+'px'; tip.style.top=y+'px';}
+svg.on('click',ev=>{ if(ev.target===svg.node()) select(null); });
+
+function neighbours(n){
+  const set=new Set([n.id]);
+  n.outs.forEach(e=>{ if(edgeOn(e)) set.add(e.t); });
+  n.ins.forEach(e=>{ if(edgeOn(e)) set.add(e.s); });
+  return set;
+}
+function mutualSet(n){
+  const outs=new Set(n.outs.filter(edgeOn).map(e=>e.t));
+  return new Set(n.ins.filter(edgeOn).map(e=>e.s).filter(s=>outs.has(s)));
+}
+function updateLabels(){
+  const sel = state.sel ? byId.get(state.sel) : null;
+  const nb = sel ? neighbours(sel) : null;
+  const grouped = state.mode!=='section';
+  labelSel.attr('display',n=>{
+    if(!nodeOn(n)) return 'none';
+    if(nb) return nb.has(n.id) && (n.id===sel.id || nb.size<=40 || k>1.3) ? null : 'none';
+    if(isUtil(n) && !state.util && grouped) return k>1.8 ? null : 'none';
+    if(n.pil && grouped) return null;
+    if(!grouped && topHubs.has(n.id)) return null;
+    if(k>2.2) return null;
+    if(k>1.5 && (n.inC+n.inT)>=8) return null;
+    return 'none';
+  }).attr('class',n=>'label'+(n.pil&&state.mode!=='section'?' pil':'')+(n.pil||(sel&&n.id===sel.id)?'':' small'));
+  clabelSel.attr('display',d=>state.mode!=='links'&&state.hidden[state.mode].has(d.k)?'none':null);
+}
+function applyFilters(){
+  nodeSel.attr('display',n=>nodeOn(n)?null:'none');
+  edgeSel.attr('display',e=>edgeOn(e)?null:'none');
+  nodeSel.classed('util', n=>isUtil(n) && !state.util);
+  highlight(); updateLabels();
+  if(state.sel && byId.has(state.sel)) renderNode(byId.get(state.sel));
+  if(state.view==='table') renderTable();
+}
+function highlight(){
+  const sel = state.sel ? byId.get(state.sel) : null;
+  root.classed('dim',!!sel);
+  if(!sel){ nodeSel.classed('hl',false).classed('sel',false); edgeSel.classed('out',false).classed('in',false).classed('both',false); return; }
+  const nb = neighbours(sel), mu = mutualSet(sel);
+  nodeSel.classed('hl',n=>nb.has(n.id)).classed('sel',n=>n.id===sel.id);
+  edgeSel.classed('out',e=>e.s===sel.id).classed('in',e=>e.t===sel.id)
+    .classed('both',e=>(e.s===sel.id&&mu.has(e.t))||(e.t===sel.id&&mu.has(e.s)));
+  edgeSel.filter(e=>e.s===sel.id||e.t===sel.id).raise();
+}
+function renderMapNote(){
+  const el=document.getElementById('mapnote');
+  const shapes=['cond','sym','svc','blog','area','video','review'].filter(g=>G.nodes.some(n=>n.g===g)).map(g=>`<span><svg width="12" height="12" viewBox="-6 -6 12 12" aria-hidden="true"><path d="${typeSym(g,50)}" fill="var(--ink-3)"/></svg>${TYPES[g].one.replace(' page','')}</span>`).join('');
+  el.innerHTML = `<div class="shapekey">${shapes}${state.mode==='topic'?'<span><svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><circle r="5" fill="none" stroke="var(--ink)" stroke-width="1.6"/></svg>Pillar</span>':''}</div>`;
+}
+
+/* ---------- panel ---------- */
+const pane = document.getElementById('pane');
+let curMutual = new Set();
+function linkRow(e, dir){
+  const other = dir==='out' ? e.T : e.S;
+  const bits=[KIND[e.c]];
+  if(e.r) bits.push(`via redirect from ${e.r}`);
+  if(isBroken(e.T)) bits.push('page not found');
+  const both = curMutual.has(other.id);
+  const a = e.a.filter(Boolean).slice(0,2).map(x=>`<q>${esc(x)}</q>`).join(', ');
+  return `<li>${dotN(other)}<div><button class="lk" data-go="${esc(other.id)}">${esc(other.t)}</button><span class="meta">${both?'<span class="both-tag">Both ways</span> · ':''}${a?a+' · ':''}${esc(bits.join(' · '))}</span></div></li>`;
+}
+function linkList(title, arr, dir, emptyText){
+  const sorted=[...arr].sort((a,b)=>a.c===b.c? (dir==='out'?a.T.t:a.S.t).localeCompare(dir==='out'?b.T.t:b.S.t) : (a.c===1?-1:b.c===1?1:a.c-b.c));
+  const first=sorted.slice(0,12).map(e=>linkRow(e,dir)).join('');
+  const rest=sorted.slice(12).map(e=>linkRow(e,dir)).join('');
+  return `<section><h3>${title}<span class="n">${arr.length}</span></h3>${arr.length?`<ul class="list">${first}</ul>${rest?`<details><summary>Show ${sorted.length-12} more</summary><ul class="list">${rest}</ul></details>`:''}`:`<p class="empty">${emptyText}</p>`}</section>`;
+}
+function ratio(a,b){ if(!b) return '<span class="ratio none">n/a</span>'; const low=a/b<0.6; return `<span class="ratio${low?' low':''}">${a}/${b}</span>`; }
+function clusterTable(){
+  const rows = clusters.filter(c=>c.t.k!=='local').map(c=>`<tr>
+    <td>${tdot(`${TCOL[c.t.k]}`)} <button class="lk" data-go="${esc((c.pillar||c.members[0]).id)}">${esc(c.t.name)}</button>${c.pillar?'':'<div class="meta" style="font-size:12px;color:var(--ink-3)">No pillar page</div>'}</td>
+    <td class="num">${c.members.length}</td>
+    <td class="num">${c.pillar?ratio(c.up.length,c.spokes.length):'<span class="ratio none">n/a</span>'}</td>
+    <td class="num">${c.pillar?ratio(c.down.length,c.spokes.length):'<span class="ratio none">n/a</span>'}</td></tr>`).join('');
+  return `<section><h3>Topic clusters</h3><div style="overflow-x:auto"><table class="ctable"><thead><tr><th>Cluster</th><th class="num">Pages</th><th class="num">Up</th><th class="num">Down</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <p class="empty" style="margin-top:6px">Up: cluster pages that link to their pillar. Down: cluster pages the pillar links to. Amber means under 60%.</p></section>`;
+}
+function commTable(){
+  const rows = COMMS.map(c=>{
+    const mix = c.topicMix.slice(0,3).map(([tk,n])=>`${tdot(`${TCOL[tk]}`)} ${n}`).join(' &nbsp;');
+    return `<tr><td><button class="lk" data-go="${esc(c.lead.id)}">${esc(c.name)}</button></td><td class="num">${c.nodes.length}</td><td class="num"><span class="ratio${c.pct<60?' low':''}">${c.pct}%</span></td><td>${mix}</td></tr>`; }).join('');
+  return `<section><h3>What the links actually group together</h3><div style="overflow-x:auto"><table class="ctable"><thead><tr><th>Link group</th><th class="num">Pages</th><th class="num">Match</th><th>Topics in it</th></tr></thead><tbody>${rows}</tbody></table></div>
+  <p class="empty" style="margin-top:6px">Each group is placed only by who links to whom, and pages keep their topic color. A group full of one color matches the cluster plan. Mixed colors show pages linked more to another topic than their own. "Match" is the share from the group's main topic; amber is under 60%.${otherComm.length?` ${otherComm.length} pages are too loosely linked to join a group.`:''}</p></section>`;
+}
+function renderOverview(){
+  const cnt = G.edges.filter(e=>e.c===1).length;
+  const intro = {
+    topic:'Pages are grouped into topic clusters, with each pillar page circled at the center of its cluster. Shapes show the page type. Site-wide pages like Scheduling and Contact sit on the outer ring and are faded, because they link to almost everything.',
+    section:'Pages are grouped by site section, matching the URL folders. Shapes and colors both show the section. A ring means the page is also in the main menu or footer.',
+    links:'Pages are grouped only by who links to whom, ignoring the topic plan. Compare this view with Topic to spot pages linked to the wrong neighbors.'
+  }[state.mode];
+  pane.innerHTML = `
+  <div><p class="eyebrow">Whole site</p><h2>How the pages link together</h2></div>
+  <div class="stats">
+    <div class="stat"><div class="v">${G.pageCount}</div><div class="k">published pages</div></div>
+    <div class="stat"><div class="v">${cnt.toLocaleString()}</div><div class="k">links written into pages</div></div>
+    <div class="stat"><div class="v">${clusters.filter(c=>c.pillar).length}</div><div class="k">pillar pages</div></div>
+  </div>
+  <p style="margin:0;color:var(--ink-2)">${intro}</p>
+  ${state.mode==='links' ? commTable() : clusterTable()}
+  <section><h3>Needs attention</h3><div class="pills">
+    <span class="pill ${brokenEdges.length?'bad':'ok'}">${brokenEdges.length} broken links</span>
+    <span class="pill ${redirectEdges.length?'warn':'ok'}">${redirectEdges.length} links through redirects</span>
+    <span class="pill ${notUp.length?'warn':'ok'}">${notUp.length} pages not linking to their pillar</span>
+    <span class="pill warn">${noInbound.length} pages nothing links to</span>
+  </div><p style="margin:8px 0 0"><button class="more" data-tab="issues">Open the issues list</button></p></section>`;
+}
+function renderNode(n){
+  const url = SITE + n.id;
+  const ins = n.ins.filter(edgeOn), outs = n.outs.filter(edgeOn);
+  const flags=[];
+  const pil = pillarOf(n);
+  if(isBroken(n)) flags.push('<span class="pill bad">Page not found (404)</span>');
+  if(n.pil){ const c=CL[n.tp]; flags.push('<span class="pill ok">Pillar page</span>'); flags.push(`<span class="pill">Links down to ${c.down.length} of ${c.spokes.length} cluster pages</span>`); flags.push(`<span class="pill">${c.up.length} of ${c.spokes.length} link back up</span>`); }
+  if(pil){ flags.push(linksTo(n,pil)?'<span class="pill ok">Links up to its pillar</span>':'<span class="pill warn">Doesn\'t link to its pillar</span>'); flags.push(linksTo(pil,n)?'<span class="pill">Pillar links here</span>':'<span class="pill">Pillar doesn\'t link here</span>'); }
+  if(n.nav) flags.push('<span class="pill">In the menu or footer</span>');
+  if(n.ni) flags.push('<span class="pill warn">Set to noindex</span>');
+  if(!isBroken(n) && n.inC+n.inT===0) flags.push(`<span class="pill warn">No page links here${n.inI?' except the blog index':''}</span>`);
+  const ip=idxPage(n); if(ip) flags.push(`<span class="pill">Blog index page ${ip}</span>`);
+  let commNote='';
+  if(COMM[n.cm]){ const c=COMM[n.cm], tk=c.topic; commNote = `<p class="empty" style="margin:0">Link group: ${esc(c.name)}${tk!==n.tp?`. <span style="color:var(--warn)">Its links tie it most closely to ${esc(TOPIC[tk].name)} pages, not ${esc(TOPIC[n.tp].name)}.</span>`:'.'}</p>`; }
+  const hidden = (n.ins.length-ins.length)+(n.outs.length-outs.length);
+  curMutual = mutualSet(n);
+  pane.innerHTML = `
+  <div><p class="eyebrow">${dotN(n)} ${esc(TYPES[n.g].one)} · ${tdot(`${TCOL[n.tp]}`)} ${esc(TOPIC[n.tp].name)}</p><h2>${esc(n.t)}</h2>
+  <div class="path" style="margin-top:4px">${isBroken(n)?esc(n.id):`<a href="${esc(url)}" target="_blank" rel="noopener">${esc(n.id)}</a>`}</div></div>
+  <div class="stats">
+    <div class="stat"><div class="v">${n.inC}</div><div class="k">links in, written into pages</div></div>
+    <div class="stat"><div class="v">${n.inT}</div><div class="k">links in, from template blocks</div></div>
+    <div class="stat"><div class="v">${n.outC}</div><div class="k">links out, written in</div></div>
+  </div>
+  ${flags.length?`<div class="pills">${flags.join('')}</div>`:''}
+  ${commNote}
+  ${curMutual.size?`<p class="empty" style="margin:0"><span class="both-tag">${curMutual.size} ${curMutual.size===1?'page links':'pages link'} both ways</span> with this one, shown in green on the map.</p>`:''}
+  ${hidden?`<p class="empty">${hidden} more links are hidden by the filters above.</p>`:''}
+  ${linkList('Pages linking here', ins, 'in', isBroken(n)?'':'No other page links here with the current filters.')}
+  ${isBroken(n)?'':linkList('This page links to', outs, 'out', 'No outgoing links with the current filters.')}
+  <p style="margin:0"><button class="more" id="clearSel">Back to the site overview</button></p>`;
+  const c=document.getElementById('clearSel'); if(c) c.onclick=()=>select(null);
+}
+pane.addEventListener('click',ev=>{
+  const b=ev.target.closest('[data-go]'); if(b){ select(b.dataset.go, true); return; }
+  const t=ev.target.closest('[data-tab]'); if(t) setView(t.dataset.tab);
+});
+function select(id, center){
+  state.sel = id && byId.has(id) ? id : null;
+  if(state.sel){ const n=byId.get(state.sel), key=MODES[state.mode].of(n); if(state.hidden[state.mode].has(key)){ state.hidden[state.mode].delete(key); buildChips(); } }
+  applyFilters();
+  if(state.sel) renderNode(byId.get(state.sel)); else renderOverview();
+  if(state.sel && center && state.view==='map'){
+    const n=byId.get(state.sel); const t=d3.zoomTransform(svg.node()); const sc=Math.max(t.k,1.2);
+    svg.transition().duration(450).call(zoom.transform, d3.zoomIdentity.translate(W/2,H/2).scale(sc).translate(-n.x,-n.y));
+  }
+  document.getElementById('mapnote').hidden = !!state.sel;
+  document.getElementById('keylegend').hidden = !(state.sel && state.view==='map');
+  document.getElementById('panel').scrollTop=0;
+}
+
+/* ---------- search ---------- */
+const q=document.getElementById('q'), sugg=document.getElementById('sugg');
+let sIdx=0, sItems=[];
+function runSearch(){
+  const v=q.value.trim().toLowerCase(); if(!v){sugg.hidden=true;q.setAttribute('aria-expanded','false');return;}
+  sItems=G.nodes.filter(n=>n.t.toLowerCase().includes(v)||n.id.includes(v)).slice(0,10); sIdx=0;
+  sugg.innerHTML=sItems.map((n,i)=>`<li role="option" id="s${i}" aria-selected="${i===0}" data-go="${esc(n.id)}">${dotN(n)} ${esc(n.t)}<small>${esc(n.id)}</small></li>`).join('') || '<li aria-disabled="true">No matching pages</li>';
+  sugg.hidden=false; q.setAttribute('aria-expanded','true');
+}
+q.addEventListener('input',runSearch);
+q.addEventListener('keydown',ev=>{
+  if(sugg.hidden) return;
+  if(ev.key==='ArrowDown'||ev.key==='ArrowUp'){ ev.preventDefault(); if(!sItems.length) return; sIdx=(sIdx+(ev.key==='ArrowDown'?1:-1)+sItems.length)%sItems.length; [...sugg.children].forEach((li,i)=>li.setAttribute('aria-selected',i===sIdx)); }
+  if(ev.key==='Enter' && sItems[sIdx]){ pick(sItems[sIdx].id); }
+  if(ev.key==='Escape'){ sugg.hidden=true; }
+});
+sugg.addEventListener('mousedown',ev=>{const li=ev.target.closest('[data-go]'); if(li){ev.preventDefault(); pick(li.dataset.go);}});
+q.addEventListener('blur',()=>setTimeout(()=>{sugg.hidden=true;q.setAttribute('aria-expanded','false');},120));
+function pick(id){ sugg.hidden=true; q.value=''; if(state.view!=='map') setView('map'); select(id,true); }
+
+/* ---------- issues view ---------- */
+function issueBlock(sev, title, body, listHtml){
+  return `<section class="issue sev-${sev}"><h3>${title}</h3><p>${body}</p>${listHtml||''}</section>`;
+}
+function pageItems(arr, meta){ return `<ul class="list">${arr.map(n=>`<li>${dotN(n)}<div><button class="lk" data-go="${esc(n.id)}">${esc(n.t)}</button><span class="meta">${esc(n.id)}${meta?' · '+esc(meta(n)):''}</span></div></li>`).join('')}</ul>`; }
+function renderIssues(){
+  const el=document.getElementById('issues');
+  const brokenList = `<ul class="list">${brokenEdges.map(e=>`<li>${dotN(e.S)}<div><button class="lk" data-go="${esc(e.s)}">${esc(e.S.t)}</button><span class="meta">links <q>${esc(e.a[0]||'')}</q> to <span class="path">${esc(e.t)}</span></span></div></li>`).join('')}</ul>`;
+  const redirList = `<ul class="list">${redirGroups.map(([from,v])=>`<li>${dotN(byId.get(v.t))}<div><span class="path">${esc(from)}</span> → <button class="lk" data-go="${esc(v.t)}">${esc(byId.get(v.t).t)}</button><span class="meta">${v.n} ${v.n===1?'page':'pages'}${v.tpl?`, ${v.tpl} of them from a template block`:''}</span></div></li>`).join('')}</ul>`;
+  const upList = clusters.filter(c=>c.pillar).map(c=>{ const miss=c.spokes.filter(n=>!c.up.includes(n)); if(!miss.length) return ''; return `<p class="subh">${tdot(`${TCOL[c.t.k]}`)} ${esc(c.t.name)} <span>${miss.length} of ${c.spokes.length} pages</span></p>${pageItems(miss)}`; }).join('');
+  el.innerHTML = `
+  <p>Found by crawling every published page on ${esc(G.crawled)}. Menu and footer links are not counted here because they appear on every page.</p>
+  ${brokenEdges.length ? issueBlock('bad', `Broken links <span class="n">${brokenEdges.length}</span>`, 'These links point to pages that return "not found." Point each one at the live page or remove it.', brokenList) : issueBlock('ok', 'Broken links <span class="n">0</span>', 'Every internal link points to a page that loads.')}
+  ${redirectEdges.length ? issueBlock('warn', `Links that go through a redirect <span class="n">${redirectEdges.length} links, ${redirGroups.length} old URLs</span>`, 'They still work, but each one makes visitors and Google take an extra hop. Updating the link to the final URL is a quick win.', redirList) : issueBlock('ok', 'Links that go through a redirect <span class="n">0</span>', 'Every internal link points straight at its final URL.')}
+  ${notUp.length ? issueBlock('warn', `Pages that don't link up to their pillar <span class="n">${notUp.length}</span>`, 'In a hub and spoke cluster every supporting page links back to its pillar. A short in-text link from each of these to the pillar is what ties the cluster together.', upList) : issueBlock('ok', 'Pages that don\'t link up to their pillar <span class="n">0</span>', 'Every page in a pillar cluster links back to its pillar.')}
+  ${blogIndexOnly.length?issueBlock('info', `Blog posts only reachable from the blog index <span class="n">${blogIndexOnly.length}</span>`, 'No page or post links to these. Google can only find them by paging through the blog index.', pageItems(blogIndexOnly, n=>'blog index page '+idxPage(n))):''}
+  ${issueBlock('info', `Other pages nothing links to <span class="n">${noInboundOther.length}</span>`, 'These pages get no links from other pages, only from the menu or footer if at all. Some are expected (legal pages, specials). Check the rest.', pageItems(noInboundOther, n=>n.nav?'in menu or footer':'not in the menu either'))}
+  ${issueBlock('info', `Pages set to noindex <span class="n">${noindex.length}</span>`, 'Search engines are told not to list these. That is usually intentional for landing pages used in ads.', pageItems(noindex))}
+  ${deadEnds.length?issueBlock('info', `Pages with no outgoing links <span class="n">${deadEnds.length}</span>`, 'Visitors who land here have nowhere to go except the menu.', pageItems(deadEnds)):''}
+  `;
+}
+document.getElementById('issues').addEventListener('click',ev=>{const b=ev.target.closest('[data-go]'); if(b){ setView('map'); select(b.dataset.go,true);} });
+
+/* ---------- table view ---------- */
+let sortKey='in', sortDir=-1;
+const cols=[
+  {k:'t',label:'Page',num:false,val:n=>n.t},
+  {k:'tp',label:'Topic',num:false,val:n=>TOPIC[n.tp].name},
+  {k:'g',label:'Type',num:false,val:n=>TYPES[n.g].one},
+  {k:'in',label:'Links in (written)',num:true,val:n=>n.inC},
+  {k:'inT',label:'Links in (template)',num:true,val:n=>n.inT},
+  {k:'out',label:'Links out (written)',num:true,val:n=>n.outC},
+  {k:'up',label:'Links to pillar',num:false,val:n=>n.pil?'Pillar':(pillarOf(n)?(linksTo(n,pillarOf(n))?'Yes':'No'):'')},
+  {k:'flags',label:'Flags',num:false,val:n=>[isBroken(n)?'404':'', n.ni?'noindex':'', (!isBroken(n)&&n.inC+n.inT===0)?'no links in':''].filter(Boolean).join(', ')}
+];
+function renderTable(){
+  const rows=G.nodes.filter(nodeOn);
+  const c=cols.find(c=>c.k===sortKey);
+  rows.sort((a,b)=>{const x=c.val(a),y=c.val(b); return (c.num?x-y:String(x).localeCompare(String(y)))*sortDir;});
+  document.getElementById('tbl').innerHTML=`<thead><tr>${cols.map(c=>`<th class="${c.num?'num':''}" aria-sort="${c.k===sortKey?(sortDir>0?'ascending':'descending'):'none'}"><button data-sort="${c.k}">${c.label}${c.k===sortKey?(sortDir>0?' ▲':' ▼'):''}</button></th>`).join('')}</tr></thead>
+  <tbody>${rows.map(n=>`<tr class="clickable" data-go="${esc(n.id)}"><td><div>${esc(n.t)}</div><div class="path">${esc(n.id)}</div></td><td>${tdot(`${TCOL[n.tp]}`)} ${esc(TOPIC[n.tp].name)}</td><td>${dotN(n)} ${esc(TYPES[n.g].one)}</td><td class="num">${n.inC}</td><td class="num">${n.inT}</td><td class="num">${n.outC}</td><td>${esc(cols[6].val(n))}</td><td>${esc(cols[7].val(n))}</td></tr>`).join('')}</tbody>`;
+}
+document.getElementById('tbl').addEventListener('click',ev=>{
+  const s=ev.target.closest('[data-sort]'); if(s){ const k=s.dataset.sort; if(k===sortKey) sortDir*=-1; else {sortKey=k; sortDir=cols.find(c=>c.k===k).num?-1:1;} renderTable(); return; }
+  const r=ev.target.closest('[data-go]'); if(r){ setView('map'); select(r.dataset.go,true); }
+});
+
+/* ---------- views ---------- */
+function setView(v){
+  state.view=v;
+  document.querySelectorAll('[role=tab]').forEach(b=>b.setAttribute('aria-selected',b.dataset.view===v));
+  document.getElementById('map').hidden = v!=='map';
+  document.getElementById('issuesView').hidden = v!=='issues';
+  document.getElementById('tableView').hidden = v!=='table';
+  document.getElementById('keylegend').hidden = !(state.sel && v==='map');
+  if(v==='issues') renderIssues();
+  if(v==='table') renderTable();
+  if(v==='map') requestAnimationFrame(()=>{ const w=mapEl.clientWidth,h=mapEl.clientHeight; if(Math.abs(w-W)>2||Math.abs(h-H)>2){W=w;H=h;fit(false);} });
+  try{ localStorage.setItem('lm-view',v);}catch(e){}
+}
+document.querySelectorAll('[role=tab]').forEach(b=>b.addEventListener('click',()=>setView(b.dataset.view)));
+window.addEventListener('resize',()=>{ if(state.view!=='map') return; const w=mapEl.clientWidth,h=mapEl.clientHeight; if(w&&h){W=w;H=h;} });
+
+document.querySelectorAll('#modeSeg button').forEach(b=>b.setAttribute('aria-checked',b.dataset.mode===state.mode));
+buildChips(); renderMapNote(); applyFilters(); renderOverview(); fit(false);
+let saved=null; try{ saved=localStorage.getItem('lm-view'); }catch(e){}
+if(saved && saved!=='map') setView(saved);
+})();
+</script>
+
+</body>
+</html>
