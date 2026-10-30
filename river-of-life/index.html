@@ -348,7 +348,7 @@ const notUp = clusters.filter(c=>c.pillar).flatMap(c=>c.spokes.filter(n=>!c.up.i
 
 /* ---------- state ---------- */
 let savedMode=null; try{ savedMode=localStorage.getItem('lm-mode'); }catch(e){}
-const state = {mode: MODES[savedMode]?savedMode:'topic', hidden:{topic:new Set(), section:new Set(), links:new Set()}, c1:true, c0:false, c2:true, util:false, sel:null, view:'map'};
+const state = {mode: MODES[savedMode]?savedMode:'topic', hidden:{topic:new Set(), section:new Set(), links:new Set()}, types:new Set(), c1:true, c0:false, c2:true, util:false, sel:null, view:'map'};
 
 document.getElementById('subline').textContent = `${G.domain} · ${G.pageCount} published pages · crawled ${G.crawled}`;
 document.getElementById('brandName').textContent = G.name;
@@ -362,17 +362,32 @@ function tdot(color){return `<span class="tdot" style="background:${color}"></sp
 
 /* ---------- filters ---------- */
 const chipWrap = document.getElementById('groupChips');
+const typeOn = n=> state.mode==='section' || !state.types.has(n.g);
+const groupOn = n=> !state.hidden[state.mode].has(MODES[state.mode].of(n));
 function buildChips(){
   const mode=state.mode, hid=state.hidden[mode];
   chipWrap.innerHTML='';
   const lbl=document.createElement('span'); lbl.className='lbl'; lbl.style.marginLeft='6px'; lbl.textContent=MODES[mode].label; chipWrap.appendChild(lbl);
   MODES[mode].groups().forEach(g=>{
-    const cnt=G.nodes.filter(n=>MODES[mode].of(n)===g.k).length; if(!cnt) return;
+    const all=G.nodes.filter(n=>MODES[mode].of(n)===g.k); if(!all.length) return;
+    const cnt=all.filter(typeOn).length;
     if(g.k==='core' && mode!=='section') return; // site-wide pages have their own toggle
     const b=document.createElement('button'); b.className='chip'; b.type='button'; b.setAttribute('aria-pressed',!hid.has(g.k));
     const sw = mode==='section' ? `<svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><path d="${typeSym(g.k,70)}" fill="${g.color}"/></svg>` : tdot(g.color);
     b.innerHTML=`${sw}<b>${esc(g.name)}</b><span class="n">${cnt}</span>`;
-    b.addEventListener('click',()=>{ if(hid.has(g.k)) hid.delete(g.k); else hid.add(g.k); b.setAttribute('aria-pressed',!hid.has(g.k)); applyFilters(); });
+    b.addEventListener('click',()=>{ if(hid.has(g.k)) hid.delete(g.k); else hid.add(g.k); buildChips(); applyFilters(); });
+    chipWrap.appendChild(b);
+  });
+  if(mode==='section') return;
+  const tl=document.createElement('span'); tl.className='lbl'; tl.style.marginLeft='6px'; tl.textContent='Page types'; chipWrap.appendChild(tl);
+  TYPE_ORDER.forEach(k=>{
+    if(!G.nodes.some(n=>n.g===k)) return;
+    const cnt=G.nodes.filter(n=>n.g===k && groupOn(n)).length;
+    const on=!state.types.has(k);
+    const b=document.createElement('button'); b.className='chip'; b.type='button'; b.setAttribute('aria-pressed',on);
+    b.title='Show or hide '+TYPES[k].name.toLowerCase()+'. The count is how many are in the clusters you have switched on.';
+    b.innerHTML=`<svg width="14" height="14" viewBox="-7 -7 14 14" aria-hidden="true"><path d="${typeSym(k,70)}" fill="var(--ink-2)"/></svg><b>${esc(TYPES[k].name)}</b><span class="n">${cnt}</span>`;
+    b.addEventListener('click',()=>{ if(state.types.has(k)) state.types.delete(k); else state.types.add(k); buildChips(); applyFilters(); });
     chipWrap.appendChild(b);
   });
 }
@@ -380,7 +395,7 @@ function buildChips(){
   const el=document.getElementById(id); el.checked=state[k]; el.addEventListener('change',()=>{state[k]=el.checked; applyFilters();});
 });
 const kindOn = e=> (e.c===1&&state.c1)||(e.c===0&&state.c0)||(e.c===2&&state.c2);
-const nodeOn = n=> !state.hidden[state.mode].has(MODES[state.mode].of(n));
+const nodeOn = n=> !state.hidden[state.mode].has(MODES[state.mode].of(n)) && typeOn(n);
 const edgeOn = e=> kindOn(e) && nodeOn(e.S) && nodeOn(e.T) && (state.util || (!isUtil(e.S)&&!isUtil(e.T)) || e.s===state.sel || e.t===state.sel);
 
 /* ---------- layouts ---------- */
@@ -588,14 +603,16 @@ function linkList(title, arr, dir, emptyText){
   return `<section><h3>${title}<span class="n">${arr.length}</span></h3>${arr.length?`<ul class="list">${first}</ul>${rest?`<details><summary>Show ${sorted.length-12} more</summary><ul class="list">${rest}</ul></details>`:''}`:`<p class="empty">${emptyText}</p>`}</section>`;
 }
 function ratio(a,b){ if(!b) return '<span class="ratio none">n/a</span>'; const low=a/b<0.6; return `<span class="ratio${low?' low':''}">${a}/${b}</span>`; }
+const TMIX = [['service',['svc']],['condition',['cond']],['symptom',['sym']],['post',['blog']],['location',['area']],['video',['video']],['patient story',['review']],['core',['core']],['missing',['broken']]];
+const mixOf = c=>TMIX.map(([lab,ks])=>{const n=c.members.filter(m=>ks.includes(m.g)).length; return n?`${n} ${lab}${n>1?(lab.endsWith('y')?'':'s'):''}`.replace(/story$/, n>1?'stories':'story'):'';}).filter(Boolean).join(' · ');
 function clusterTable(){
   const rows = clusters.filter(c=>c.t.k!=='local').map(c=>`<tr>
-    <td>${tdot(`${TCOL[c.t.k]}`)} <button class="lk" data-go="${esc((c.pillar||c.members[0]).id)}">${esc(c.t.name)}</button>${c.pillar?'':'<div class="meta" style="font-size:12px;color:var(--ink-3)">No pillar page</div>'}</td>
+    <td>${tdot(`${TCOL[c.t.k]}`)} <button class="lk" data-go="${esc((c.pillar||c.members[0]).id)}">${esc(c.t.name)}</button><div class="meta" style="font-size:12px;color:var(--ink-3)">${mixOf(c)}${c.pillar?'':' · no pillar page'}</div></td>
     <td class="num">${c.members.length}</td>
     <td class="num">${c.pillar?ratio(c.up.length,c.spokes.length):'<span class="ratio none">n/a</span>'}</td>
     <td class="num">${c.pillar?ratio(c.down.length,c.spokes.length):'<span class="ratio none">n/a</span>'}</td></tr>`).join('');
   return `<section><h3>Topic clusters</h3><div style="overflow-x:auto"><table class="ctable"><thead><tr><th>Cluster</th><th class="num">Pages</th><th class="num">Up</th><th class="num">Down</th></tr></thead><tbody>${rows}</tbody></table></div>
-  <p class="empty" style="margin-top:6px">Up: cluster pages that link to their pillar. Down: cluster pages the pillar links to. Amber means under 60%.</p></section>`;
+  <p class="empty" style="margin-top:6px">Under each cluster: how many of each page type it holds. Up: cluster pages that link to their pillar. Down: cluster pages the pillar links to. Amber means under 60%.</p></section>`;
 }
 function commTable(){
   const rows = COMMS.map(c=>{
